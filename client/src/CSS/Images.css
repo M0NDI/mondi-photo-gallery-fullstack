@@ -1,0 +1,13 @@
+.images-main-container {
+    width: 100%;
+}
+
+.search-image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.search-image img{
+    width: 50%;
+}
