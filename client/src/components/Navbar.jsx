@@ -1,8 +1,10 @@
+import "../CSS/Navbar.css";
+import profileLogo from '../assets/images/profile.svg'
 
-const Navbar = () => {
+const Navbar = ({handleSubmit, handleInputChange}) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg t-bg-cyan-600 t-fixed t-top-0">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             Navbar
@@ -61,22 +63,17 @@ const Navbar = () => {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">
-                  Disabled
-                </a>
-              </li>
             </ul>
-            <form className="d-flex" role="search">
+            <form className="d-flex t-w-full t-h-8" role="search" onSubmit={handleSubmit}>
               <input
-                className="form-control me-2"
+                className="form-control"
                 type="search"
                 placeholder="Search"
-                aria-label="Search"
+                onChange={handleInputChange}
               />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
+              <div className="t-h-full t-w-12 t-flex t-justify-center t-items-center">
+                <img src={profileLogo} className="t-h-3/4 t-cursor-pointer"/>
+              </div>
             </form>
           </div>
         </div>
