@@ -1,13 +1,24 @@
-.images-main-container {
+
+.gallery-container{
+    columns: 3 300px;
+    column-gap: 5px;
+    width: 60%;
+    margin: auto;
+}
+
+.gallery-items {
     width: 100%;
 }
 
-.search-image {
+.gallery-container .image{
     display: flex;
     justify-content: center;
-    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    object-fit: cover;
 }
 
-.search-image img{
-    width: 50%;
+img {
+    width: 100%;
+    margin: 1px;
 }

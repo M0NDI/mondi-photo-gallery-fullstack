@@ -1,19 +1,20 @@
+/* eslint-disable react/jsx-key */
 import "../CSS/Images.css";
 
 const Images = ({ images }) => {
   return (
-    <div className="images-main-container">
-      <div className="all-images t-mt-12">
-        {images ? (
-          images.results.map((image) => (
-            <div key={image.id} className="search-image outline">
-              <img src={image.urls.full} alt="Download Link" className="tw-outline" />
+    <div className="gallery-container t-mt-4">
+      {images ? (
+        images.results.map((image) => (
+          <div className="gallery-items">
+            <div key={image.id} className="image">
+              <img src={image.urls.raw} alt="Download Link" key={image.id} />
             </div>
-          ))
-        ) : (
-          <></>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
