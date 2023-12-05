@@ -1,3 +1,21 @@
 .navbar {
-    background-color: #85B6A2;
+  position: fixed !important;
+  border-bottom: 2px solid #0c152a;
+}
+
+.search-form input:focus {
+  outline: none;
+  box-shadow: 0px 3px #0c152a;
+  transition-duration: 500ms;
+}
+
+.search-form input:hover {
+  outline: none;
+  box-shadow: 0px 3px #0c152a;
+  transition-duration: 200ms;
+  border: 1px solid #0c152a;
+}
+
+.navbar-toggler-icon {
+  height: 1rem;
 }
