@@ -1,21 +1,43 @@
 .navbar {
   position: fixed !important;
+  top: 0;
   border-bottom: 2px solid #0c152a;
 }
 
 .search-form input:focus {
   outline: none;
-  box-shadow: 0px 3px #0c152a;
+  box-shadow: 0px 2px #0c152a;
   transition-duration: 500ms;
+  border: 1px solid #0c152a;
 }
 
 .search-form input:hover {
   outline: none;
-  box-shadow: 0px 3px #0c152a;
+  box-shadow: 0px 2px #0c152a;
   transition-duration: 200ms;
   border: 1px solid #0c152a;
 }
 
+.navbar-toggler {
+  outline: 0 !important;
+  border: 0 !important;
+}
+
+.navbar-toggler:focus, .navbar-toggler:active {
+  box-shadow: none !important;
+}
+
+.navbar-toggler:hover {
+  outline: 2px solid #0c152a !important;
+  transition-duration: 1000ms !important;
+}
+
 .navbar-toggler-icon {
-  height: 1rem;
+  height: 2rem !important;
+}
+
+@media (max-width: 990px) {
+  .search-form {
+    margin-top: 10px;
+  }
 }

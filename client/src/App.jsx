@@ -3,6 +3,7 @@ import Images from "./components/Images";
 import Navbar from "./components/Navbar";
 import GetImages from "./API/Remote/api";
 import { useState, useEffect } from "react";
+import ImageHoverOptions from "./components/ImageHoverOptions";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -33,11 +34,6 @@ function App() {
         setImages((prevImages) => [...prevImages, ...nextPageResults]);
   
         setCurrentPage(currentPage + 1);
-        
-        // Restore scroll position after loading the next page
-        const currentScroll = document.documentElement.scrollTop;
-        document.documentElement.scrollTop = currentScroll + 1;
-        document.documentElement.scrollTop = currentScroll;
       }
     } catch (error) {
       console.error('Error fetching next page:', error);
@@ -48,11 +44,9 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log(images)
-      const scrollY = window.scrollY;
       const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-      if (scrollY / pageHeight >= 0.75) {
+      if (window.scrollY / pageHeight >= 0.75) {
         getNextPage();
       }
     };
@@ -68,7 +62,6 @@ function App() {
     <div className="app t-bg-zinc-200">
       <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
       <Images images={images} loading={loading}/>
-      <button onClick={getNextPage}>NEXT</button>
     </div>
   );
 }
