@@ -7,7 +7,7 @@ import mondiLogo from "../assets/images/mondi-logo-text-only.png";
 const Navbar = ({ handleSubmit, handleInputChange, setUserSearchTerm }) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg t-flex t-flex-col t-bg-zinc-300 t-w-full t-z-10">
+      <nav className="navbar navbar-expand-lg t-flex t-flex-col t-bg-white t-w-full t-z-10">
         <div className="container-fluid t-flex t-justify-evenly">
           <img src={mondiLogo} className="t-w-24 t-mr-4" />
           <button
@@ -32,7 +32,7 @@ const Navbar = ({ handleSubmit, handleInputChange, setUserSearchTerm }) => {
             </form>
           </div>
         </div>
-        <Categories setUserSearchTerm={setUserSearchTerm}/>
+        <Categories setUserSearchTerm={setUserSearchTerm} />
       </nav>
     </>
   );

@@ -11,16 +11,11 @@ const Images = ({ images }) => {
             <span className="visually-hidden">Loading...</span>
           </div>
         ) : (
+          // TRY FLEX DIRECTION COL FOR BETTER GRID LAYOUT
           images.map((image, index) => (
             <div className="gallery-items" key={index}>
               <div className="gallery-image">
                 <img src={image.urls.regular} alt={images.alt_description} />
-                <div className="t-mt-96 t-outline t-absolute">
-                  <p>LIKE</p>
-                  <p>ADD TO COLLECTION</p>
-                  <p>USER</p>
-                  <p>DOWNLOAD</p>
-                </div>
               </div>
             </div>
           ))

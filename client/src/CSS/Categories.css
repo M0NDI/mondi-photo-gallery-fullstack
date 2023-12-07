@@ -1,10 +1,10 @@
-div.scrollmenu {
+div.scroll-menu {
   background-color: white;
   overflow: auto;
   white-space: nowrap;
 }
 
-div.scrollmenu a {
+div.scroll-menu a {
   display: inline-block;
   color: #0c152a;
   text-align: center;
@@ -12,20 +12,25 @@ div.scrollmenu a {
   text-decoration: none;
 }
 
-div.scrollmenu a:hover {
-  background-color: #777;
+div.scroll-menu a {
+  color: white;
+  background-color: #0c152a;
+}
+
+div.scroll-menu a:hover {
+  color: #b7defb;
 }
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-    height: 15px;
-  }
-  
-  *::-webkit-scrollbar-track {
-    background: white;
-  }
-  
-  *::-webkit-scrollbar-thumb {
-    background-color: #0c152a;
-    border-radius: 20px;
-  }
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0c152a;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 20px;
+}

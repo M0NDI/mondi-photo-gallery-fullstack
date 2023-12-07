@@ -2,7 +2,7 @@ import "../CSS/Categories.css";
 
 const Categories = ({setUserSearchTerm}) => {
   return (
-    <div className="categories-container scrollmenu t-w-full t-mt-3 t-outline t-outline-0 t-bg-bg-white">
+    <div className="categories-container scroll-menu t-w-full t-mt-3">
       <a href="#home" onClick={() =>{setUserSearchTerm("wallpapers")}}>Wallpapers</a>
       <a href="#news">3D Renders</a>
       <a href="#contact">Nature</a>
