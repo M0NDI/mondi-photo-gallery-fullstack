@@ -3,13 +3,28 @@ import Categories from "./Categories";
 
 import profileLogo from "../assets/images/profile.svg";
 import mondiLogo from "../assets/images/mondi-logo-text-only.png";
+import { NavLink } from "react-router-dom";
 
-const Navbar = ({ handleSubmit, handleInputChange, setUserSearchTerm }) => {
+const Navbar = ({
+  handleSubmit,
+  handleCategoryClick,
+  handleInputChange,
+  setUserSearchTerm,
+  userSearchTerm,
+  setImages,
+}) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg t-flex t-flex-col t-bg-white t-w-full t-z-10">
         <div className="container-fluid t-flex t-justify-evenly">
-          <img src={mondiLogo} className="t-w-24 t-mr-4" />
+          <NavLink
+            to={"/"}
+            onClick={() => {
+              setImages([]);
+            }}
+          >
+            <img src={mondiLogo} className="t-w-24 t-mr-4" />
+          </NavLink>
           <button
             className="navbar-toggler t-outline group"
             type="button"
@@ -32,7 +47,11 @@ const Navbar = ({ handleSubmit, handleInputChange, setUserSearchTerm }) => {
             </form>
           </div>
         </div>
-        <Categories setUserSearchTerm={setUserSearchTerm} />
+        <Categories
+          setUserSearchTerm={setUserSearchTerm}
+          userSearchTerm={userSearchTerm}
+          handleCategoryClick={handleCategoryClick}
+        />
       </nav>
     </>
   );

@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 import "../CSS/Images.css";
+import { useSelector } from "react-redux";
 
-const Images = ({ images }) => {
+const Images = () => {
+  const images = useSelector((state) => state.images.value);
+
   return (
     <div className="main-container">
       <div className="gallery-container">
@@ -11,11 +14,12 @@ const Images = ({ images }) => {
             <span className="visually-hidden">Loading...</span>
           </div>
         ) : (
-          // TRY FLEX DIRECTION COL FOR BETTER GRID LAYOUT
           images.map((image, index) => (
             <div className="gallery-items" key={index}>
-              <div className="gallery-image">
-                <img src={image.urls.regular} alt={images.alt_description} />
+              <div className="gallery-image" key={index}>
+                {image.urls && image.urls.regular && (
+                  <img src={image.urls.regular} alt={image.alt_description} />
+                )}
               </div>
             </div>
           ))

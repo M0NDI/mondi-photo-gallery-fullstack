@@ -8,5 +8,4 @@ export default {
   corePlugins: {
     preflight: false,
   },
-  plugins: [require("@tailwindcss/forms")],
 };
