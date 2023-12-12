@@ -10,8 +10,8 @@ export const imagesSlice = createSlice({
       state.value = [];
     },
     addItems: (state, action) => {
-      const items = action.payload
-      state.value.push(...items);
+      // Update the state with the new items
+      state.value.push(...action.payload);
     },
   },
 });

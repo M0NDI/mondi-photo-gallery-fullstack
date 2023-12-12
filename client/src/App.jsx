@@ -1,82 +1,75 @@
 import "./App.css";
 import "react-router-dom";
+import _ from "lodash";
 import Images from "./components/Images";
 import Navbar from "./components/Navbar";
 import GetImages from "./API/Remote/api";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+// import state reducers
 import { imagesReset, addItems } from "./features/imagesSlice";
-import { pageReset, increment, decrement } from "./features/currentPageSlice";
+import { pageReset, increment, decrement } from "./features/currentPageSlice.js";
 import { resetSearchTerm, updateSearchTerm } from "./features/userSearchTermSlice";
-import { resetLoading, toggleLoading } from "./features/loadingSlice";
+import { setLoadingTrue, resetLoading, toggleLoading } from "./features/loadingSlice";
 
 function App() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // states
+  // state selectors
   const images = useSelector((state) => state.images.value);
   const currentPage = useSelector((state) => state.currentPage.value);
   const userSearchTerm = useSelector((state) => state.userSearchTerm.value);
-  const loading = useSelector((state) => {state.loading.value})
+  const loading = useSelector((state) => state.loading.value);
 
-  const dispatch = useDispatch();
-
-  const handleSubmit = async (e) => {
+  // handle search submission
+  const handleSubmit = async (newSearchTerm, currentPage, e) => {
     e.preventDefault();
     dispatch(imagesReset());
     try {
-      const getImages = await GetImages(userSearchTerm);
-      navigate(`/s/${userSearchTerm}`);
-      if (getImages) {
+      console.log(newSearchTerm)
+      const getImages = await GetImages(newSearchTerm, currentPage);
+      if (getImages && getImages.length > 0) {
         dispatch(addItems(getImages));
-        console.log(images);
+        navigate(`/s/${newSearchTerm}`);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    console.log(images);
-  }, [images]);
-
-  const handleInputChange = (e) => {
-    dispatch(updateSearchTerm(e.target.value));
-    console.log(e.target.value);
+  // handle user search input
+  const handleInputChange = async (e) => {
+    const searchTermUpdate = dispatch(updateSearchTerm(e.target.value));
+    console.log(searchTermUpdate);
   };
 
+  // get next page of search results
   const getNextPage = async () => {
-    if (loading) return;
-
-    setLoading(true);
-
+    console.log("Getting next page... " + currentPage);
     try {
       const nextPageResults = await GetImages(userSearchTerm, currentPage);
-
-      if (nextPageResults.length > 0) {
-        // Add next page results to images state array
+      if (nextPageResults) {
         dispatch(addItems(nextPageResults));
-        // Increment currentPage state by 1
-        dispatch(increment());
-        console.log(images);
       }
     } catch (error) {
-      console.error("Error fetching next page:", error);
-    } finally {
-      setLoading(false);
+      console.log(error);
     }
   };
 
+  // load next page of results only if user scrolls down to a certain point on page
   useEffect(() => {
-    const handleScroll = () => {
-      const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (loading) return;
 
+    const handleScroll = _.debounce(() => {
+      const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (window.scrollY / pageHeight >= 0.75) {
         getNextPage();
+        dispatch(increment());
       }
-    };
+    }, 20); // Adjust the debounce delay as needed
 
     window.addEventListener("scroll", handleScroll);
 
@@ -85,13 +78,14 @@ function App() {
     };
   }, [currentPage, loading]);
 
+  useEffect(() => {
+    dispatch(pageReset());
+    dispatch(imagesReset());
+  }, [userSearchTerm]);
+
   return (
     <div className="app t-bg-zinc-200">
-      <Navbar
-        handleSubmit={handleSubmit}
-        handleInputChange={handleInputChange}
-        userSearchTerm={userSearchTerm}
-      />
+      <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
       <Images loading={loading} />
     </div>
   );

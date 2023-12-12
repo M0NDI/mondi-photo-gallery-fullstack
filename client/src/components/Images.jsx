@@ -10,9 +10,7 @@ const Images = () => {
     <div className="main-container">
       <div className="gallery-container">
         {!images ? (
-          <div className="spinner-border t-absolute t-mt-24" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
+          <></>
         ) : (
           images.map((image, index) => (
             <div className="gallery-items" key={index}>

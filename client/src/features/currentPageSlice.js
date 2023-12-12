@@ -3,13 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const currentPageSlice = createSlice({
   name: "currentPage",
   initialState: {
-    value: 2,
+    value: 1,
   },
   reducers: {
     pageReset: (state) => {
-      state.value = 2;
+      state.value = 1;
     },
     increment: (state) => {
+      console.log(state.value)
       state.value++;
     },
     decrement: (state) => {
