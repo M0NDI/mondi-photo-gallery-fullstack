@@ -3,6 +3,7 @@ import imagesReducer from "./features/imagesSlice";
 import currentPageReducer from "./features/currentPageSlice";
 import userSearchTermReducer from "./features/userSearchTermSlice";
 import loadingReducer from "./features/loadingSlice";
+import urlBaseReducer from "./features/isUrlBaseSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     currentPage: currentPageReducer,
     userSearchTerm: userSearchTermReducer,
     loading: loadingReducer,
+    urlBase: urlBaseReducer,
   },
 });
 

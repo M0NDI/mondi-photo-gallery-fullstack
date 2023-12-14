@@ -1,9 +1,11 @@
 import "./App.css";
 import "react-router-dom";
 import _ from "lodash";
+import { Routes, Route } from "react-router-dom";
 import Images from "./components/Images";
 import Navbar from "./components/Navbar";
-import GetImages from "./API/Remote/api";
+import RandomPhotos from "./components/RandomPhotos.jsx";
+import { GetImages, GetRandomPhotos } from "./API/Remote/api.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +15,9 @@ import { imagesReset, addItems } from "./features/imagesSlice";
 import { pageReset, increment, decrement } from "./features/currentPageSlice.js";
 import { resetSearchTerm, updateSearchTerm } from "./features/userSearchTermSlice";
 import { setLoadingTrue, resetLoading, toggleLoading } from "./features/loadingSlice";
+import { urlBaseTrue, urlBaseFalse } from "./features/isUrlBaseSlice.js";
+
+const isRootPath = location.pathname === "/";
 
 function App() {
   const navigate = useNavigate();
@@ -25,15 +30,15 @@ function App() {
   const loading = useSelector((state) => state.loading.value);
 
   // handle search submission
-  const handleSubmit = async (newSearchTerm, currentPage, e) => {
+  const handleSubmit = async (userSearchTerm, currentPage, e) => {
     e.preventDefault();
     dispatch(imagesReset());
     try {
-      console.log(newSearchTerm)
-      const getImages = await GetImages(newSearchTerm, currentPage);
+      console.log(userSearchTerm);
+      const getImages = await GetImages(userSearchTerm, currentPage);
       if (getImages && getImages.length > 0) {
         dispatch(addItems(getImages));
-        navigate(`/s/${newSearchTerm}`);
+        navigate(`/s/${userSearchTerm}`);
       }
     } catch (error) {
       console.log(error);
@@ -41,7 +46,7 @@ function App() {
   };
 
   // handle user search input
-  const handleInputChange = async (e) => {
+  const handleInputChange = (e) => {
     const searchTermUpdate = dispatch(updateSearchTerm(e.target.value));
     console.log(searchTermUpdate);
   };
@@ -69,7 +74,7 @@ function App() {
         getNextPage();
         dispatch(increment());
       }
-    }, 20); // Adjust the debounce delay as needed
+    }, 40); // Adjust the debounce delay as needed
 
     window.addEventListener("scroll", handleScroll);
 
@@ -84,8 +89,11 @@ function App() {
   }, [userSearchTerm]);
 
   return (
-    <div className="app t-bg-zinc-200">
-      <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
+    <div className="app">
+      <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange}/>
+      <Routes>
+        <Route path="/" element={<RandomPhotos />}></Route>
+      </Routes>
       <Images loading={loading} />
     </div>
   );

@@ -7,18 +7,16 @@ const Images = () => {
   const images = useSelector((state) => state.images.value);
 
   return (
-    <div className="main-container">
+    <div className="main-container t-mt-44">
       <div className="gallery-container">
         {!images ? (
           <></>
         ) : (
           images.map((image, index) => (
-            <div className="gallery-items" key={index}>
-              <div className="gallery-image" key={index}>
-                {image.urls && image.urls.regular && (
-                  <img src={image.urls.regular} alt={image.alt_description} />
-                )}
-              </div>
+            <div className="gallery-image" key={index}>
+              {image.urls && image.urls.regular && (
+                <img src={image.urls.regular} alt={image.alt_description} />
+              )}
             </div>
           ))
         )}

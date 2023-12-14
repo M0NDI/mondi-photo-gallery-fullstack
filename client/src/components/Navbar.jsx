@@ -42,7 +42,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <form className="search-form d-flex t-w-full" role="search" onSubmit={handleSubmit}>
+            <form className="search-form d-flex t-w-full" role="search" onSubmit={(e) => handleSubmit(userSearchTerm, currentPage, e)}>
               <input
                 className="t-w-full t-h-12 t-rounded-3xl t-border-0 t-pl-12 t-pr-12"
                 type="search"
