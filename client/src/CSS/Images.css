@@ -7,7 +7,7 @@
 .gallery-container {
   display: flex;
   justify-content: center;
-  width: 50%;
+  width: 70%;
 }
 
 .gallery-image {

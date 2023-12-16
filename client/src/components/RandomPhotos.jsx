@@ -17,7 +17,13 @@ const RandomPhotos = () => {
   const currentPage = useSelector((state) => state.currentPage.value);
 
   const numColumns = 3;
-  const columns = Array.from({ length: numColumns }, () => []);
+  const columns = Array.from({length: numColumns}, () => ([]))
+
+  // Distribute images across columns dynamically
+  randomImages.forEach((image, index) => {
+    const columnIndex = index % numColumns;
+    columns[columnIndex].push(image);
+  });
 
   const randomPhotos = async () => {
     try {
@@ -55,12 +61,6 @@ const RandomPhotos = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // Distribute images across columns dynamically
-  randomImages.forEach((image, index) => {
-    const columnIndex = index % numColumns;
-    columns[columnIndex].push(image);
-  });
 
   return (
     <div className="main-container t-mt-48">

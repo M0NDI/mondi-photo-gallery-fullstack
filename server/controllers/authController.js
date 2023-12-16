@@ -7,7 +7,7 @@ const Login = async (req, res) => {
 
   try {
     const user = await UserSchema.findOne({ username: new RegExp(username, "i") });
-    
+
     if (!user) {
       return res.status(404).json({ error: { msg: `Invalid credentials` } });
     }
@@ -23,16 +23,15 @@ const Login = async (req, res) => {
     res.json({ msg: `Successfully logged in` });
   } catch (error) {
     // Handle errors
-    console.log('Error during login:', error);
+    console.log("Error during login:", error);
     res.status(500).json({ error: { msg: "Internal Server Error" } });
   }
 };
 
-
 const Register = async (req, res) => {
   const saltRounds = 10;
 
-  const { username, password, email } = req.body;
+  const { username, password, email, imageCollection } = req.body;
 
   try {
     // Generate a salt
@@ -46,6 +45,7 @@ const Register = async (req, res) => {
       username: username,
       password: hashedPassword,
       email: email,
+      imageCollection: [],
     });
 
     if (createUser) {
