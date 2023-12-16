@@ -1,21 +1,23 @@
 import "../CSS/Images.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { imagesReset, addItems } from "../features/imagesSlice";
 import { urlBaseFalse, urlBaseTrue } from "../features/isUrlBaseSlice";
 import { useState, useEffect } from "react";
 import { GetRandomPhotos } from "../API/Remote/api";
-import _ from "lodash";
+import lodash from "lodash";
 
 const RandomPhotos = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const [randomImages, setRandomImages] = useState([]);
 
   const urlBase = useSelector((state) => state.urlBase.value);
   const currentPage = useSelector((state) => state.currentPage.value);
+
+  const numColumns = 3;
+  const columns = Array.from({ length: numColumns }, () => []);
 
   const randomPhotos = async () => {
     try {
@@ -31,17 +33,21 @@ const RandomPhotos = () => {
   useEffect(() => {
     setRandomImages([]);
     if (location.pathname === "/") {
-      randomPhotos()
+      randomPhotos();
     }
   }, [location.pathname]);
 
   useEffect(() => {
-    const handleScroll = _.debounce(() => {
+    window.scrollTo({ top: 0 });
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = lodash.debounce(() => {
       const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (window.scrollY / pageHeight >= 0.75) {
-        randomPhotos()
+        randomPhotos();
       }
-    }, 40); // Adjust the debounce delay as needed
+    }, 40);
 
     window.addEventListener("scroll", handleScroll);
 
@@ -50,20 +56,26 @@ const RandomPhotos = () => {
     };
   }, []);
 
+  // Distribute images across columns dynamically
+  randomImages.forEach((image, index) => {
+    const columnIndex = index % numColumns;
+    columns[columnIndex].push(image);
+  });
+
   return (
     <div className="main-container t-mt-48">
       <div className="gallery-container">
-        {!randomImages ? (
-          <></>
-        ) : (
-          randomImages.map((image, index) => (
-            <div className="gallery-image" key={index}>
-              {image.urls && image.urls.regular && (
-                <img src={image.urls.regular} alt={image.alt_description} />
-              )}
-            </div>
-          ))
-        )}
+        {columns.map((column, columnIndex) => (
+          <div className={`column-${columnIndex + 1}`} key={columnIndex}>
+            {column.map((image, index) => (
+              <div className="gallery-image" key={index}>
+                {image.urls && image.urls.regular && (
+                  <img src={image.urls.regular} alt={image.alt_description} />
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );

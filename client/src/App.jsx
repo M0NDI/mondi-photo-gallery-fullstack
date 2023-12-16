@@ -92,7 +92,7 @@ function App() {
     <div className="app">
       <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange}/>
       <Routes>
-        <Route path="/" element={<RandomPhotos />}></Route>
+        <Route path="/" element={<RandomPhotos />}/>
       </Routes>
       <Images loading={loading} />
     </div>
