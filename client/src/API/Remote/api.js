@@ -29,7 +29,7 @@ const GetRandomPhotos = async () => {
   try {
     const response = await axios.get(rootUrl + "photos/random", {
       params: {
-        count: 30,
+        count: 20,
       },
       headers: {
         Authorization: `Client-ID ${accessKey}`,

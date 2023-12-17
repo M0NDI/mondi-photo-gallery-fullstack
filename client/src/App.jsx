@@ -70,7 +70,7 @@ function App() {
 
     const handleScroll = _.debounce(() => {
       const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (window.scrollY / pageHeight >= 0.75) {
+      if (window.scrollY / pageHeight >= 0.6) {
         getNextPage();
         dispatch(increment());
       }

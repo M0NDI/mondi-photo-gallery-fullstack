@@ -1,4 +1,5 @@
 import "../CSS/Images.css";
+import ImageHoverOptions from "./ImageHoverOptions";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { imagesReset, addItems } from "../features/imagesSlice";
@@ -12,12 +13,13 @@ const RandomPhotos = () => {
   const location = useLocation();
 
   const [randomImages, setRandomImages] = useState([]);
+  const [hoveredImage, setHoveredImage] = useState(null);
 
   const urlBase = useSelector((state) => state.urlBase.value);
   const currentPage = useSelector((state) => state.currentPage.value);
 
   const numColumns = 3;
-  const columns = Array.from({length: numColumns}, () => ([]))
+  const columns = Array.from({ length: numColumns }, () => []);
 
   // Distribute images across columns dynamically
   randomImages.forEach((image, index) => {
@@ -34,6 +36,16 @@ const RandomPhotos = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleMouseEnter = (event) => {
+    const image = event;
+    setHoveredImage(image);
+    console.log(hoveredImage);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredImage(null);
   };
 
   useEffect(() => {
@@ -68,7 +80,13 @@ const RandomPhotos = () => {
         {columns.map((column, columnIndex) => (
           <div className={`column-${columnIndex + 1}`} key={columnIndex}>
             {column.map((image, index) => (
-              <div className="gallery-image" key={index}>
+              <div
+                className="gallery-image"
+                onMouseEnter={() => {handleMouseEnter(image)}}
+                onMouseLeave={handleMouseLeave}
+                key={index}
+              >
+                {hoveredImage === image ? (<ImageHoverOptions/>):(<></>)}
                 {image.urls && image.urls.regular && (
                   <img src={image.urls.regular} alt={image.alt_description} />
                 )}

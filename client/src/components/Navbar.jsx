@@ -1,15 +1,14 @@
 import "../CSS/Navbar.css";
 import Categories from "./Categories";
+import MyAccount from "./MyAccount.jsx";
 
-import profileLogo from "../assets/images/profile.svg";
-import mondiLogo from "../assets/images/mondi-logo-text-only.png";
+import mondiLogo from "../assets/images/logos/mondi-logo-text-only.png";
 import { NavLink } from "react-router-dom";
 
 import { imagesReset } from "../features/imagesSlice";
 import { resetSearchTerm } from "../features/userSearchTermSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { pageReset } from "../features/currentPageSlice.js";
-import { useEffect } from "react";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg t-flex t-flex-col t-bg-white t-w-full t-z-10">
+      <nav className="navbar navbar-expand-lg t-flex t-flex-col t-bg-white t-w-full t-z-30">
         <div className="container-fluid t-flex t-justify-evenly">
           <NavLink to={"/"}>
             <img src={mondiLogo} className="t-w-24 t-mr-4" onClick={() => resetDataOnLogoClick()} />
@@ -42,7 +41,11 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <form className="search-form d-flex t-w-full" role="search" onSubmit={(e) => handleSubmit(userSearchTerm, currentPage, e)}>
+            <form
+              className="search-form d-flex t-w-full"
+              role="search"
+              onSubmit={(e) => handleSubmit(userSearchTerm, currentPage, e)}
+            >
               <input
                 className="t-w-full t-h-12 t-rounded-3xl t-border-0 t-pl-12 t-pr-12"
                 type="search"
@@ -50,9 +53,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
                 value={userSearchTerm}
                 onChange={handleInputChange}
               />
-              <div className="t-h-12 t-w-12 t-flex t-justify-center t-items-center t-ml-4">
-                <img src={profileLogo} className="t-h-8 t-cursor-pointer" />
-              </div>
+              <MyAccount />
             </form>
           </div>
         </div>

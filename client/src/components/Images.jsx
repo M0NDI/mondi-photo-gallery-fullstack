@@ -2,10 +2,13 @@
 /* eslint-disable react/jsx-key */
 import "../CSS/Images.css";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ImageHoverOptions from "./ImageHoverOptions";
 
 const Images = () => {
   const images = useSelector((state) => state.images.value);
+
+  const [hoveredImage, setHoveredImage] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -20,13 +23,31 @@ const Images = () => {
     columns[columnIndex].push(image);
   });
 
+  const handleMouseEnter = (event) => {
+    const image = event;
+    setHoveredImage(image);
+    console.log(hoveredImage);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredImage(null);
+  };
+
   return (
     <div className="main-container t-mt-44">
       <div className="gallery-container">
         {columns.map((column, columnIndex) => (
           <div className={`column-${columnIndex + 1}`} key={columnIndex}>
             {column.map((image, index) => (
-              <div className="gallery-image" key={index}>
+              <div
+                className="gallery-image"
+                onMouseEnter={() => {
+                  handleMouseEnter(image);
+                }}
+                onMouseLeave={handleMouseLeave}
+                key={index}
+              >
+                {hoveredImage === image ? <ImageHoverOptions /> : <></>}
                 {image.urls && image.urls.regular && (
                   <img src={image.urls.regular} alt={image.alt_description} />
                 )}
@@ -35,6 +56,7 @@ const Images = () => {
           </div>
         ))}
       </div>
+      <div className="page-overlay"></div>
     </div>
   );
 };
