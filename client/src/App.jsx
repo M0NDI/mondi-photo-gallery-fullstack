@@ -2,14 +2,18 @@ import "./App.css";
 import "react-router-dom";
 import _ from "lodash";
 import { Routes, Route } from "react-router-dom";
+
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { GetImages, GetRandomPhotos } from "./API/Remote/api.js";
+
 import Images from "./components/Images";
 import Navbar from "./components/Navbar";
 import RandomPhotos from "./components/RandomPhotos.jsx";
 import PhotoPage from "./pages/PhotoPage.jsx";
-import { GetImages, GetRandomPhotos } from "./API/Remote/api.js";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import Register from "./pages/Register.jsx";
 
 // import state reducers
 import { imagesReset, addItems } from "./features/imagesSlice";
@@ -17,9 +21,6 @@ import { pageReset, increment, decrement } from "./features/currentPageSlice.js"
 import { resetSearchTerm, updateSearchTerm } from "./features/userSearchTermSlice";
 import { setLoadingTrue, resetLoading, toggleLoading } from "./features/loadingSlice";
 import { urlBaseTrue, urlBaseFalse } from "./features/isUrlBaseSlice.js";
-import Register from "./pages/Register.jsx";
-
-const isRootPath = location.pathname === "/";
 
 function App() {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ function App() {
       const getImages = await GetImages(userSearchTerm, currentPage);
       if (getImages && getImages.length > 0) {
         dispatch(addItems(getImages));
+        console.log(images);
         navigate(`/s/${userSearchTerm}`);
       }
     } catch (error) {
@@ -72,7 +74,8 @@ function App() {
       location.pathname !== "/register" &&
       location.pathname !== "/profile" &&
       location.pathname !== "/my-account" &&
-      location.pathname !== "/settings"
+      location.pathname !== "/settings" &&
+      !location.pathname.startsWith("/photo/")
     ) {
       if (loading) return;
 
@@ -108,7 +111,7 @@ function App() {
   useEffect(() => {
     dispatch(pageReset());
     dispatch(imagesReset());
-  }, [userSearchTerm, location.pathname]);
+  }, [userSearchTerm]);
 
   return (
     <div className="app t-h-screen">
@@ -116,7 +119,7 @@ function App() {
       <Routes>
         <Route path="/" element={<RandomPhotos />} />
         <Route path="/register" element={<Register />} />
-        <Route path='/photo/:id' element={<PhotoPage />}/>
+        <Route path="/photo/:id" element={<PhotoPage />} />
       </Routes>
       <Images loading={loading} />
     </div>

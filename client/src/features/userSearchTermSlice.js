@@ -11,7 +11,6 @@ export const searchTermSlice = createSlice({
     },
     updateSearchTerm: (state, action) => {
       state.value = action.payload
-      console.log(action.payload)
     },
   },
 });

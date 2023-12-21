@@ -9,6 +9,7 @@ import { imagesReset } from "../features/imagesSlice";
 import { resetSearchTerm } from "../features/userSearchTermSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { pageReset } from "../features/currentPageSlice.js";
+import { useEffect } from "react";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {
   const dispatch = useDispatch();

@@ -1,28 +1,41 @@
 import { useParams } from "react-router-dom";
 import { getSingleImage } from "../API/Remote/api";
 import { useEffect, useState } from "react";
+import { imageReset, addItem } from "../features/singleImageSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const PhotoPage = () => {
   const { id } = useParams();
 
-  const [singleImage, setSingleImage] = useState(null);
+  const dispatch = useDispatch()
+
+  const singleImage = useSelector((state) => state.singleImage.value)
 
   const fetchSingleImage = async () => {
-    const image = await getSingleImage(id);
-    setSingleImage(image);
-    console.log(image);
-    return image;
+    try {
+      const image = await getSingleImage(id);
+      if (image) {
+        dispatch(addItem(image));
+        console.log(image);
+        console.log(singleImage)
+      }
+      return image;
+    } catch (error) {
+      console.error("Error fetching single image:", error);
+      return null;
+    }
   };
 
   useEffect(() => {
     fetchSingleImage();
+    dispatch(imageReset())
   }, [id]);
 
   return (
     <div>
-      {singleImage ? ( // Conditionally render the image component
-        <div className="t-pt-40">
-          <img src={singleImage.urls.regular} alt={singleImage.alt_description} />
+      {singleImage.length > 0 && singleImage[0].urls ? (
+        <div className="t-pt-40 t-flex t-absolute">
+          <img src={singleImage[0].urls.regular} alt={singleImage.alt_description} className="t-w-1/3 t-outline"/>
         </div>
       ) : (
         <p>Loading...</p>

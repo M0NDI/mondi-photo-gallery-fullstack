@@ -17,7 +17,6 @@ const GetImages = async (searchTerm, page) => {
       },
     });
     if (response) {
-      console.log(response.data.results);
       return response.data.results;
     }
   } catch (error) {

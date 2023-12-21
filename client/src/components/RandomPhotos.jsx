@@ -1,5 +1,6 @@
 import "../CSS/Images.css";
 import ImageHoverOptions from "./ImageHoverOptions";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { imagesReset, addItems } from "../features/imagesSlice";
@@ -14,7 +15,6 @@ const RandomPhotos = () => {
 
   const [randomImages, setRandomImages] = useState([]);
   const [hoveredImage, setHoveredImage] = useState(null);
-  const [isImageHovered, setIsImageHovered] = useState(false)
 
   const urlBase = useSelector((state) => state.urlBase.value);
   const currentPage = useSelector((state) => state.currentPage.value);
@@ -83,13 +83,17 @@ const RandomPhotos = () => {
             {column.map((image, index) => (
               <div
                 className="gallery-image"
-                onMouseEnter={() => {handleMouseEnter(image)}}
+                onMouseEnter={() => {
+                  handleMouseEnter(image);
+                }}
                 onMouseLeave={handleMouseLeave}
                 key={index}
               >
-                {hoveredImage === image ? (<ImageHoverOptions/>):(<></>)}
+                {hoveredImage === image ? <ImageHoverOptions /> : <></>}
                 {image.urls && image.urls.regular && (
-                  <img src={image.urls.regular} alt={image.alt_description} />
+                  <Link to={`/photo/${image.id}`}>
+                    <img src={image.urls.regular} alt={image.alt_description} />
+                  </Link>
                 )}
               </div>
             ))}
