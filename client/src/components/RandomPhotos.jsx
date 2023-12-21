@@ -14,6 +14,7 @@ const RandomPhotos = () => {
 
   const [randomImages, setRandomImages] = useState([]);
   const [hoveredImage, setHoveredImage] = useState(null);
+  const [isImageHovered, setIsImageHovered] = useState(false)
 
   const urlBase = useSelector((state) => state.urlBase.value);
   const currentPage = useSelector((state) => state.currentPage.value);
@@ -62,7 +63,7 @@ const RandomPhotos = () => {
   useEffect(() => {
     const handleScroll = lodash.debounce(() => {
       const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (window.scrollY / pageHeight >= 0.75) {
+      if (window.scrollY / pageHeight >= 0.6) {
         randomPhotos();
       }
     }, 40);

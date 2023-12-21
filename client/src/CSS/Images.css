@@ -35,11 +35,7 @@
 
 .gallery-image img:hover {
   cursor: pointer;
-  height: auto;
   z-index: 10;
-  /* opacity: 80%; */
-  /* transform: scale(1.01);
-  transition: 0.3s ease-out; */
 }
 
 @media (max-width:940px) {

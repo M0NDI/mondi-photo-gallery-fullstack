@@ -4,6 +4,14 @@
     left: 20px;
   }
 
-  .hover-icon-heart  {
+  .hover-icon-heart {
     width: 2rem;
+    -webkit-transition: transform 0.2s ease-in-out;
+    -moz-transition: transform 0.2s ease-in-out;
+    -ms-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-icon-heart:hover {
+    transform: scale(1.5);
   }

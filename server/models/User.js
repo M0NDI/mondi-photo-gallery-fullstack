@@ -22,7 +22,10 @@ const UserSchema = new Schema({
   },
   imageCollection: {
     type: Array,
-  }
+  },
+  likedPhotos: {
+    type: Array,
+  },
 });
 
 const User = mongoose.model("User", UserSchema);

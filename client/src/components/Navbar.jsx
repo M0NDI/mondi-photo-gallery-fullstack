@@ -20,9 +20,6 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
     dispatch(pageReset());
     dispatch(resetSearchTerm());
     dispatch(imagesReset());
-    console.log(images);
-    console.log(userSearchTerm);
-    console.log(currentPage);
   };
 
   return (

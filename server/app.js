@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 require("dotenv").config();
 
 const logger = require("./middleware/eventLogger");
+
+app.use(cors());
 
 // db
 const connectDB = require("./db/connect");
@@ -20,7 +23,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
 app.get("/", (req, res) => {
-  res.send(`hi`);
+  res.send(`Server up and running`);
 });
 
 // start
@@ -28,7 +31,7 @@ const port = 3000;
 const start = () => {
   try {
     connectDB(process.env.MONGO_URI);
-    console.log(`Connected to DB`)
+    console.log(`Connected to DB`);
   } catch (error) {
     console.log(error);
   }

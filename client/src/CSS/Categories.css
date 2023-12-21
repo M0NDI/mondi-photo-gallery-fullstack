@@ -1,6 +1,6 @@
 div.scroll-menu {
   background-color: white;
-  overflow: auto;
+  overflow:auto;
   white-space: nowrap;
 }
 

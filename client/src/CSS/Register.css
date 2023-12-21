@@ -1,0 +1,19 @@
+.register-form {
+    background-color: #0c152a;
+}
+
+.register-main-container form input {
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    outline: 1px solid #0c152a;
+}
+
+.register-main-container form input::placeholder {
+  color: #0c152a;
+  padding-left: 0.5rem;
+}
+
+.register-input {
+    width: 50%;
+}

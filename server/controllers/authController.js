@@ -53,7 +53,7 @@ const Register = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: { msg: "Internal Server Error" } });
+    res.status(500).json({ error: { msg: "Username already taken." } });
   }
 };
 

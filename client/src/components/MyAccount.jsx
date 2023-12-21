@@ -33,11 +33,12 @@ const MyAccount = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32, backgroundColor: '#0c152a' }}>A</Avatar>
+            <Avatar sx={{ width: 32, height: 32, backgroundColor: "#0c152a" }}>A</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
       <Menu
+        className="menu"
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
@@ -73,25 +74,40 @@ const MyAccount = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose} className="menu-item">
-          <Avatar /> <NavLink to="/my-profile">Profile</NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose} className="menu-item">
-          <Avatar /> <NavLink to="/my-account">My Account</NavLink>
-        </MenuItem>
+        <NavLink to="/register" className="t-w-full t-h-full">
+          <MenuItem onClick={handleClose} className="menu-item">
+            <Avatar /> Register
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/my-profile" className="t-w-full t-h-full">
+          <MenuItem onClick={handleClose} className="menu-item">
+            <Avatar /> Profile
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/my-account" className="t-w-full t-h-full">
+          <MenuItem onClick={handleClose} className="menu-item">
+            <Avatar /> My Account
+          </MenuItem>
+        </NavLink>
         <Divider />
-        <MenuItem onClick={handleClose} className="menu-item">
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          <NavLink to="/settings">Settings</NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose} className="menu-item">
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          <NavLink>Logout</NavLink>
-        </MenuItem>
+
+        <NavLink to="/settings" onClick={handleClose} className="menu-item">
+          <MenuItem>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </NavLink>
+
+        <NavLink to="/" onClick={handleClose} className="menu-item">
+          <MenuItem>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </NavLink>
       </Menu>
     </React.Fragment>
   );

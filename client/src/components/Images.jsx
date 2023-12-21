@@ -4,6 +4,7 @@ import "../CSS/Images.css";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ImageHoverOptions from "./ImageHoverOptions";
+import { Link } from "react-router-dom";
 
 const Images = () => {
   const images = useSelector((state) => state.images.value);
@@ -49,7 +50,9 @@ const Images = () => {
               >
                 {hoveredImage === image ? <ImageHoverOptions /> : <></>}
                 {image.urls && image.urls.regular && (
-                  <img src={image.urls.regular} alt={image.alt_description} />
+                  <Link to={`/photo/${image.id}`}>
+                    <img src={image.urls.regular} alt={image.alt_description} />
+                  </Link>
                 )}
               </div>
             ))}
