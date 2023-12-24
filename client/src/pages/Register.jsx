@@ -37,21 +37,21 @@ const Register = () => {
 
       <form onSubmit={handleSubmit} className="register-form t-flex t-w-full t-h-full rounded t-flex-col t-justify-center t-items-center t-p-24">
         <input
-          className="register-input register-input-username"
+          className={`register-input register-input-username ${!username ? 'input-empty' : ''}`}
           type="text"
           placeholder="username"
           autoComplete="on"
           onChange={handleUsernameInputChange}
         />
         <input
-          className="register-input register-input-password"
+          className={`register-input register-input-password ${!userPassword ? 'input-empty' : ''}`}
           type="password"
           placeholder="password"
           autoComplete="on"
           onChange={handlePasswordInputChange}
         />
         <input
-          className="register-input register-input-email"
+          className={`register-input register-input-email ${!userEmail ? 'input-empty' : ''}`}
           type="text"
           placeholder="email"
           autoComplete="on"

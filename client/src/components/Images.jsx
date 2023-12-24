@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 import "../CSS/Images.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import ImageHoverOptions from "./ImageHoverOptions";
 import { Link } from "react-router-dom";
+import { imagesReset } from "../features/imagesSlice";
 
 const Images = () => {
+  const dispatch = useDispatch();
+  
   const images = useSelector((state) => state.images.value);
 
   const [hoveredImage, setHoveredImage] = useState(null);
@@ -33,6 +36,13 @@ const Images = () => {
   const handleMouseLeave = () => {
     setHoveredImage(null);
   };
+
+  // prevent images from search results from displaying 
+  useEffect(() => {
+    if (location.pathname === "/my-profile") {
+      dispatch(imagesReset());
+    }
+  }, [location.pathname]);
 
   return (
     <div className="main-container t-mt-44">

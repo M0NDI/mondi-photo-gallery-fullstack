@@ -10,11 +10,9 @@ const RegisterUser = async (username, password, email) => {
       password: password,
       email: email,
     });
-    console.log("User registered", user);
     return user.data;
   } catch (error) {
-    console.error("Username already taken:", error);
-    throw error; // Rethrow the error for further handling
+    console.error(error);
   }
 };
 

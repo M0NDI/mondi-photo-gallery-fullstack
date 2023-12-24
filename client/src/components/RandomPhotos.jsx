@@ -73,7 +73,7 @@ const RandomPhotos = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="main-container t-mt-48">

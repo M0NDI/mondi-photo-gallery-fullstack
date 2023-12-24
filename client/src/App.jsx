@@ -41,7 +41,6 @@ function App() {
       const getImages = await GetImages(userSearchTerm, currentPage);
       if (getImages && getImages.length > 0) {
         dispatch(addItems(getImages));
-        console.log(images);
         navigate(`/s/${userSearchTerm}`);
       }
     } catch (error) {
@@ -52,13 +51,13 @@ function App() {
   // handle user search input
   const handleInputChange = (e) => {
     const searchTermUpdate = dispatch(updateSearchTerm(e.target.value));
-    console.log(searchTermUpdate);
   };
 
   // get next page of search results
   const getNextPage = async () => {
     console.log("Getting next page... " + currentPage);
     try {
+      dispatch(increment());
       const nextPageResults = await GetImages(userSearchTerm, currentPage);
       if (nextPageResults) {
         dispatch(addItems(nextPageResults));
@@ -68,11 +67,21 @@ function App() {
     }
   };
 
+  /* 
+  this prevents images from being rendered below the registration form 
+  at "/register". 
+*/
+  useEffect(() => {
+    if (location.pathname === "/register") {
+      dispatch(imagesReset());
+    }
+  }, [location.pathname]);
+
   // load next page of results only if user scrolls down to a certain point on page
   useEffect(() => {
     if (
       location.pathname !== "/register" &&
-      location.pathname !== "/profile" &&
+      location.pathname !== "/my-profile" &&
       location.pathname !== "/my-account" &&
       location.pathname !== "/settings" &&
       !location.pathname.startsWith("/photo/")
@@ -96,7 +105,6 @@ function App() {
         const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
         if (window.scrollY / pageHeight >= 0.6) {
           getNextPage();
-          dispatch(increment());
         }
       }, 40);
 
@@ -107,11 +115,6 @@ function App() {
       };
     }
   }, [location.pathname, currentPage, loading]);
-
-  useEffect(() => {
-    dispatch(pageReset());
-    dispatch(imagesReset());
-  }, [userSearchTerm]);
 
   return (
     <div className="app t-h-screen">
