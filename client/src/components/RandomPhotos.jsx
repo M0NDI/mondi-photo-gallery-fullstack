@@ -91,7 +91,7 @@ const RandomPhotos = () => {
               >
                 {hoveredImage === image ? <ImageHoverOptions /> : <></>}
                 {image.urls && image.urls.regular && (
-                  <Link to={`/photo/${image.id}`}>
+                  <Link to={`/photo/${image.id}`} target="_blank">
                     <img src={image.urls.regular} alt={image.alt_description} />
                   </Link>
                 )}

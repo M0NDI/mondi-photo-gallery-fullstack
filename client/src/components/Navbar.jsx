@@ -51,6 +51,12 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
                 value={userSearchTerm}
                 onChange={handleInputChange}
               />
+              <NavLink to="/register">
+                Sign Up
+              </NavLink>
+              <NavLink to="/login">
+                Login
+              </NavLink>
               <MyAccount />
             </form>
           </div>

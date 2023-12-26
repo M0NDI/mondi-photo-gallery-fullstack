@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-key */
 import "../CSS/Images.css";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ImageHoverOptions from "./ImageHoverOptions";
 import { Link } from "react-router-dom";
@@ -37,7 +38,7 @@ const Images = () => {
     setHoveredImage(null);
   };
 
-  // prevent images from search results from displaying 
+  // prevent images from search results from displaying
   useEffect(() => {
     if (location.pathname === "/my-profile") {
       dispatch(imagesReset());
@@ -60,7 +61,7 @@ const Images = () => {
               >
                 {hoveredImage === image ? <ImageHoverOptions /> : <></>}
                 {image.urls && image.urls.regular && (
-                  <Link to={`/photo/${image.id}`}>
+                  <Link to={`/photo/${image.id}`} target="_blank">
                     <img src={image.urls.regular} alt={image.alt_description} />
                   </Link>
                 )}

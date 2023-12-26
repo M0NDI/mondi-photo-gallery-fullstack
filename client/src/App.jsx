@@ -14,13 +14,12 @@ import Navbar from "./components/Navbar";
 import RandomPhotos from "./components/RandomPhotos.jsx";
 import PhotoPage from "./pages/PhotoPage.jsx";
 import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
 
 // import state reducers
 import { imagesReset, addItems } from "./features/imagesSlice";
-import { pageReset, increment, decrement } from "./features/currentPageSlice.js";
-import { resetSearchTerm, updateSearchTerm } from "./features/userSearchTermSlice";
-import { setLoadingTrue, resetLoading, toggleLoading } from "./features/loadingSlice";
-import { urlBaseTrue, urlBaseFalse } from "./features/isUrlBaseSlice.js";
+import { increment } from "./features/currentPageSlice.js";
+import { updateSearchTerm } from "./features/userSearchTermSlice";
 
 function App() {
   const navigate = useNavigate();
@@ -42,6 +41,7 @@ function App() {
       if (getImages && getImages.length > 0) {
         dispatch(addItems(getImages));
         navigate(`/s/${userSearchTerm}`);
+        console.log(images);
       }
     } catch (error) {
       console.log(error);
@@ -121,10 +121,11 @@ function App() {
       <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
       <Routes>
         <Route path="/" element={<RandomPhotos />} />
+        <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register />} />
         <Route path="/photo/:id" element={<PhotoPage />} />
+        <Route path="/s/:searchTerm" element={<Images />} />
       </Routes>
-      <Images loading={loading} />
     </div>
   );
 }

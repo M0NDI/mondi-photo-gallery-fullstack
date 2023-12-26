@@ -16,4 +16,16 @@ const RegisterUser = async (username, password, email) => {
   }
 };
 
-export { RegisterUser };
+const LoginUser = async (username, password) => {
+  try {
+    const user = await axios.post(authUrl + "/login", {
+      username: username,
+      password: password,
+    });
+    return user.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { RegisterUser, LoginUser };

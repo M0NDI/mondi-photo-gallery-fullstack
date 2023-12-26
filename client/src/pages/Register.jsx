@@ -2,8 +2,11 @@ import { useState } from "react";
 import { RegisterUser } from "../API/Backend/api";
 import '../CSS/Register.css'
 import cameraPhoto from '../assets/images/camera-leaves.jpg'
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate
+
   const [username, setUsername] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -25,7 +28,10 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    RegisterUser(username, userPassword, userEmail);
+    const register = await RegisterUser(username, userPassword, userEmail);
+    if (register) {
+      navigate("/login")
+    }
   };
 
   return (
