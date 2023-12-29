@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const UserSchema = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { createJwt, isTokenValid } = require("../utils/jwt");
 require("dotenv").config();
 
 const Register = async (req, res) => {
@@ -38,8 +39,9 @@ const Register = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      data: createUser,
+      message: "User created",
     });
+    
   } catch (error) {
     console.log(error);
   }
@@ -66,16 +68,11 @@ const Login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      {
-        username: user.username,
-        password: user.password,
-      },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "1d",
-      }
-    );
+    const token = createJwt({ payload: { user: user.username, id: user._id } });
+    const valid = isTokenValid({ token });
+    if (valid) {
+      res.json({ msg: "Token is valid" });
+    }
     delete user.password;
 
     res.status(200).json({

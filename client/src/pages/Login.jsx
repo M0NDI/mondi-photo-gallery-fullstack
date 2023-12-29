@@ -22,7 +22,7 @@ const Login = () => {
     try {
       event.preventDefault();
       const login = await LoginUser(username, userPassword);
-      if (login) {
+      if (!login.token) {
         navigate("/");
       }
     } catch (error) {
