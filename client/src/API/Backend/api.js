@@ -18,10 +18,14 @@ const RegisterUser = async (username, password, email) => {
 
 const LoginUser = async (username, password) => {
   try {
-    const user = await axios.post(authUrl + "/login", {
-      username: username,
-      password: password,
-    });
+    const user = await axios.post(
+      authUrl + "/login",
+      {
+        username: username,
+        password: password,
+      },
+      { withCredentials: true }
+    );
     return user.data;
   } catch (error) {
     console.error(error);

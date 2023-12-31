@@ -5,7 +5,9 @@ require("dotenv").config();
 
 const logger = require("./middleware/eventLogger");
 
-app.use(cors());
+// rest of the packages
+const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 
 // db
 const connectDB = require("./db/connect");
@@ -13,6 +15,9 @@ const connectDB = require("./db/connect");
 // middleware
 app.use(express.json());
 app.use("/", logger);
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(morgan("common"));
+app.use(cookieParser(process.env.JWT_SECRET)); // cookies now in req.signedCookies
 
 // routers
 const authRouter = require("./routes/authRouter");
@@ -23,6 +28,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
 app.get("/", (req, res) => {
+  console.log(req.signedCookies);
   res.send(`Server up and running`);
 });
 

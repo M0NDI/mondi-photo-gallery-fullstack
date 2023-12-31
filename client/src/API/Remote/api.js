@@ -4,7 +4,7 @@ const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 const rootUrl = "https://api.unsplash.com/";
 
-const GetImages = async (searchTerm, page) => {
+const getImages = async (searchTerm, page) => {
   try {
     const response = await axios.get(rootUrl + "search/photos", {
       params: {
@@ -41,7 +41,7 @@ const getSingleImage = async (imageId) => {
   }
 };
 
-const GetRandomPhotos = async () => {
+const getRandomPhotos = async () => {
   try {
     const response = await axios.get(rootUrl + "photos/random", {
       params: {
@@ -60,4 +60,4 @@ const GetRandomPhotos = async () => {
   }
 };
 
-export { GetImages, GetRandomPhotos, getSingleImage };
+export { getImages, getRandomPhotos, getSingleImage };

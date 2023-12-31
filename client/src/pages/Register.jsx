@@ -5,7 +5,7 @@ import cameraPhoto from '../assets/images/camera-leaves.jpg'
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const navigate = useNavigate
+  const navigate = useNavigate()
 
   const [username, setUsername] = useState("");
   const [userPassword, setUserPassword] = useState("");

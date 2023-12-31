@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { imagesReset, addItems } from "../features/imagesSlice";
 import { urlBaseFalse, urlBaseTrue } from "../features/isUrlBaseSlice";
 import { useState, useEffect } from "react";
-import { GetRandomPhotos } from "../API/Remote/api";
+import { getRandomPhotos } from "../API/Remote/api";
 import lodash from "lodash";
 
 const RandomPhotos = () => {
@@ -30,7 +30,7 @@ const RandomPhotos = () => {
 
   const randomPhotos = async () => {
     try {
-      const photos = await GetRandomPhotos();
+      const photos = await getRandomPhotos();
       if (photos) {
         setRandomImages((prevPhotos) => [...prevPhotos, ...photos]);
       }

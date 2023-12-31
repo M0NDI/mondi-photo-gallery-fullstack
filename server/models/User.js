@@ -20,6 +20,9 @@ const UserSchema = new Schema({
       message: "Invalid email format",
     },
   },
+  token: {
+    type: String,
+  },
   imageCollection: {
     type: Array,
   },

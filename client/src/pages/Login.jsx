@@ -10,19 +10,17 @@ const Login = () => {
 
   const handleUsernameInputChange = (event) => {
     setUsername(event.target.value);
-    console.log(event.target.value);
   };
 
   const handlePasswordInputChange = (event) => {
     setUserPassword(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
       const login = await LoginUser(username, userPassword);
-      if (!login.token) {
+      if (login) {
         navigate("/");
       }
     } catch (error) {

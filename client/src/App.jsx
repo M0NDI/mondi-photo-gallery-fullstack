@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { GetImages, GetRandomPhotos } from "./API/Remote/api.js";
+import { getImages, getRandomPhotos } from "./API/Remote/api.js";
 
 import Images from "./components/Images";
 import Navbar from "./components/Navbar";
@@ -37,9 +37,9 @@ function App() {
     dispatch(imagesReset());
     try {
       console.log(userSearchTerm);
-      const getImages = await GetImages(userSearchTerm, currentPage);
-      if (getImages && getImages.length > 0) {
-        dispatch(addItems(getImages));
+      const fetchImages = await getImages(userSearchTerm, currentPage);
+      if (fetchImages && fetchImages.length > 0) {
+        dispatch(addItems(fetchImages));
         navigate(`/s/${userSearchTerm}`);
         console.log(images);
       }
@@ -58,7 +58,7 @@ function App() {
     console.log("Getting next page... " + currentPage);
     try {
       dispatch(increment());
-      const nextPageResults = await GetImages(userSearchTerm, currentPage);
+      const nextPageResults = await getImages(userSearchTerm, currentPage);
       if (nextPageResults) {
         dispatch(addItems(nextPageResults));
       }
@@ -106,7 +106,7 @@ function App() {
         if (window.scrollY / pageHeight >= 0.6) {
           getNextPage();
         }
-      }, 40);
+      }, 150);
 
       window.addEventListener("scroll", handleScroll);
 
