@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const UserSchema = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { createJwt, isTokenValid } = require("../utils/jwt");
+const { createJwt, isTokenValid, attachCookiesToResponse } = require("../utils/jwt");
 require("dotenv").config();
 
 const Register = async (req, res) => {
@@ -29,7 +29,7 @@ const Register = async (req, res) => {
       return res.status(409).send("User already exists.");
     }
 
-    // Create a new user with the hashed password
+    // Create a new user with the hashed password 
     const createUser = await UserSchema.create({
       username,
       password: hashedPassword,
@@ -44,13 +44,6 @@ const Register = async (req, res) => {
     };
     const token = createJwt({ payload: tokenUser });
     const valid = isTokenValid({ token });
-
-    res.cookie("token", tokenUser, {
-      expires: new Date(Date.now() + 86400000),
-      httpOnly: true,
-      secure: process.env.ENVIRONMENT === "production",
-      signed: true,
-    });
 
     res.status(200).json({
       status: 200,
@@ -89,36 +82,15 @@ const Login = async (req, res) => {
     }
 
     const tokenUser = { username: user.username, email: user.email, id: user._id };
-    const token = createJwt({ payload: tokenUser });
-    const valid = isTokenValid({ token });
-    if (valid) {
-      return res.json({ msg: "Token is valid" });
-    }
-
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 86400000),
-      httpOnly: true,
-      secure: process.env.ENVIRONMENT === "production",
-      signed: true,
-    });
-    delete user.password;
-
-    res.status(200).json({
-      status: 200,
-      success: true,
-      message: "Successfully logged in",
-      token: tokenUser,
-    });
+    attachCookiesToResponse({res, user: tokenUser})
   } catch (error) {
     console.log(error);
   }
 };
 
 const Logout = async (req, res) => {
-  res.cookie("token", "logout", {
-    httpOnly: true,
-    expires: new Date(0), // Set the expiration date to a past date
-  });
+  console.log(req.cookies)
+  await res.clearCookie('token')
   res.status(200).json({ msg: "User logged out" });
 };
 

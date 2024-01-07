@@ -68,9 +68,9 @@ function App() {
   };
 
   /* 
-  this prevents images from being rendered below the registration form 
-  at "/register". 
-*/
+    this prevents images from being rendered below the registration form 
+    at "/register". 
+  */
   useEffect(() => {
     if (location.pathname === "/register") {
       dispatch(imagesReset());

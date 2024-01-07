@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // import state reducers
-import { resetSearchTerm, updateSearchTerm } from "../features/userSearchTermSlice";
-import { increment, pageReset } from "../features/currentPageSlice";
+import { updateSearchTerm } from "../features/userSearchTermSlice";
+import { pageReset } from "../features/currentPageSlice";
 import { imagesReset } from "../features/imagesSlice";
 import { useEffect } from "react";
 
@@ -28,10 +28,6 @@ const Categories = ({ handleSubmit }) => {
     await handleSubmit(newSearchTerm, currentPage, e);
   };
 
-  // useEffect(() => {
-  //   dispatch(pageReset());
-  //   dispatch(imagesReset());
-  // }, [userSearchTerm]);
 
   return (
     <div className="categories-container scroll-menu t-w-full t-mt-3 t-text-center">

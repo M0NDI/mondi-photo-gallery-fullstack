@@ -4,7 +4,9 @@ import currentPageReducer from "./features/currentPageSlice";
 import userSearchTermReducer from "./features/userSearchTermSlice";
 import loadingReducer from "./features/loadingSlice";
 import urlBaseReducer from "./features/isUrlBaseSlice";
-import singleImageReducer from './features/singleImageSlice'
+import singleImageReducer from "./features/singleImageSlice";
+import isUserLoggedInReducer from "./features/isUserLoggedInSlice";
+import userTokenReducer from "./features/userTokenSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ const store = configureStore({
     loading: loadingReducer,
     urlBase: urlBaseReducer,
     singleImage: singleImageReducer,
+    isUserLoggedIn: isUserLoggedInReducer,
+    userToken: userTokenReducer,
   },
 });
 

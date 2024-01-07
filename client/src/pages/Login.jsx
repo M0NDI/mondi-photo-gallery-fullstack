@@ -1,9 +1,17 @@
 import { LoginUser } from "../API/Backend/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+// import redux state functions
+import { setUserToken } from "../features/userTokenSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // redux state selectors
+  const userToken = useSelector((state) => state.userToken.value)
 
   const [username, setUsername] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -20,13 +28,18 @@ const Login = () => {
     try {
       event.preventDefault();
       const login = await LoginUser(username, userPassword);
-      if (login) {
+      if (login.token) {
+        dispatch(setUserToken(login.token));
         navigate("/");
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    console.log({'login': userToken})
+  }, [userToken])
 
   return (
     <div className="register-main-container t-flex t-items-center t-pt-20 t-h-full t-bg-zinc-200">

@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-key */
 import "../CSS/Images.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ImageHoverOptions from "./ImageHoverOptions";
 import { Link } from "react-router-dom";
@@ -31,7 +30,6 @@ const Images = () => {
   const handleMouseEnter = (event) => {
     const image = event;
     setHoveredImage(image);
-    console.log(hoveredImage);
   };
 
   const handleMouseLeave = () => {

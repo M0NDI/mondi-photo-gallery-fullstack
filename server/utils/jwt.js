@@ -12,7 +12,23 @@ const isTokenValid = ({ token }) => {
   return valid;
 };
 
+const attachCookiesToResponse = ({ res, user }) => {
+  const token = createJwt({ payload: user });
+  const tokenValue = token;
+  res.cookie("token", tokenValue, {
+    httpOnly: true,
+    expiresIn: "1h",
+  });
+  res.status(200).json({
+    status: 200,
+    success: true,
+    msg: "Successfully logged in",
+    token: tokenValue,
+  });
+};
+
 module.exports = {
   createJwt,
   isTokenValid,
+  attachCookiesToResponse,
 };

@@ -3,19 +3,23 @@ import ImageHoverOptions from "./ImageHoverOptions";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { imagesReset, addItems } from "../features/imagesSlice";
-import { urlBaseFalse, urlBaseTrue } from "../features/isUrlBaseSlice";
 import { useState, useEffect } from "react";
 import { getRandomPhotos } from "../API/Remote/api";
 import lodash from "lodash";
+
+// import redux state
+import { setFalse, setTrue, toggleLoggedIn } from "../features/isUserLoggedInSlice";
 
 const RandomPhotos = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  // react state
   const [randomImages, setRandomImages] = useState([]);
   const [hoveredImage, setHoveredImage] = useState(null);
 
+  // redux state
+  const isLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
   const urlBase = useSelector((state) => state.urlBase.value);
   const currentPage = useSelector((state) => state.currentPage.value);
 
@@ -42,7 +46,6 @@ const RandomPhotos = () => {
   const handleMouseEnter = (event) => {
     const image = event;
     setHoveredImage(image);
-    console.log(hoveredImage);
   };
 
   const handleMouseLeave = () => {
@@ -59,6 +62,24 @@ const RandomPhotos = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [location.pathname]);
+
+  /* 
+    Get cookie value
+  */
+  useEffect(() => {
+    const checkTokenExists = () => {
+      const tokenExists = /(?:(?:^|.*;\s*)token\s*=\s*[^;]*|$)/.test(document.cookie);
+      if (tokenExists) {
+        dispatch(setTrue())
+      } else if (!tokenExists) {
+        dispatch(setFalse())
+      }
+      console.log(isLoggedIn)
+    };
+
+    // Use setTimeout with a short delay
+    setTimeout(checkTokenExists, 10);
+  }, []);
 
   useEffect(() => {
     const handleScroll = lodash.debounce(() => {
