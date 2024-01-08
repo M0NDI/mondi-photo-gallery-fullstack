@@ -9,7 +9,7 @@ const Register = async (req, res) => {
   const saltRounds = 10;
 
   try {
-    const { username, password, email } = req.body;
+    let { username, password, email, role } = req.body;
 
     // Generate a salt
     const salt = await bcrypt.genSalt(saltRounds);
@@ -29,11 +29,19 @@ const Register = async (req, res) => {
       return res.status(409).send("User already exists.");
     }
 
-    // Create a new user with the hashed password 
+    let userCount = await UserSchema.countDocuments({});
+    if (userCount == 0) {
+      role = "admin";
+    } else {
+      role = "user";
+    }
+
+    // Create a new user with the hashed password
     const createUser = await UserSchema.create({
       username,
       password: hashedPassword,
       email,
+      role,
       imageCollection: [],
     });
 
@@ -82,15 +90,14 @@ const Login = async (req, res) => {
     }
 
     const tokenUser = { username: user.username, email: user.email, id: user._id };
-    attachCookiesToResponse({res, user: tokenUser})
+    attachCookiesToResponse({ res, user: tokenUser });
   } catch (error) {
     console.log(error);
   }
 };
 
 const Logout = async (req, res) => {
-  console.log(req.cookies)
-  await res.clearCookie('token')
+  await res.clearCookie("token");
   res.status(200).json({ msg: "User logged out" });
 };
 

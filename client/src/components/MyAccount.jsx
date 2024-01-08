@@ -21,6 +21,7 @@ const MyAccount = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -33,7 +34,7 @@ const MyAccount = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32, backgroundColor: "#0c152a" }}>A</Avatar>
+            <Avatar sx={{ width: 44, height: 44, backgroundColor: "#0c152a" }}>A</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -62,7 +63,7 @@ const MyAccount = () => {
               display: "block",
               position: "absolute",
               top: 0,
-              right: 16,
+              right: 22,
               width: 10,
               height: 10,
               bgcolor: "#0c152a",
@@ -74,11 +75,7 @@ const MyAccount = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <NavLink to="/register" className="t-w-full t-h-full">
-          <MenuItem onClick={handleClose} className="menu-item">
-            <Avatar /> Register
-          </MenuItem>
-        </NavLink>
+        <NavLink to="/register" className="t-w-full t-h-full"></NavLink>
         <NavLink to="/my-profile" className="t-w-full t-h-full">
           <MenuItem onClick={handleClose} className="menu-item">
             <Avatar /> Profile
@@ -97,15 +94,6 @@ const MyAccount = () => {
               <Settings fontSize="small" />
             </ListItemIcon>
             Settings
-          </MenuItem>
-        </NavLink>
-
-        <NavLink to="/" onClick={handleClose} className="menu-item">
-          <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
           </MenuItem>
         </NavLink>
       </Menu>

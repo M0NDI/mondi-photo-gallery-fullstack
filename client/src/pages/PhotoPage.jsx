@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { getSingleImage } from "../API/Remote/api";
-import { useEffect, useState } from "react";
-import { imageReset, addItem } from "../features/singleImageSlice";
+import { useEffect } from "react";
+import { imageReset, addItem } from "../redux/singleImageSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const PhotoPage = () => {

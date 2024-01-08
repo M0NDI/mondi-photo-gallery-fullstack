@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import imagesReducer from "./features/imagesSlice";
-import currentPageReducer from "./features/currentPageSlice";
-import userSearchTermReducer from "./features/userSearchTermSlice";
-import loadingReducer from "./features/loadingSlice";
-import urlBaseReducer from "./features/isUrlBaseSlice";
-import singleImageReducer from "./features/singleImageSlice";
-import isUserLoggedInReducer from "./features/isUserLoggedInSlice";
-import userTokenReducer from "./features/userTokenSlice";
+import imagesReducer from "./redux/imagesSlice";
+import currentPageReducer from "./redux/currentPageSlice";
+import userSearchTermReducer from "./redux/userSearchTermSlice";
+import loadingReducer from "./redux/loadingSlice";
+import urlBaseReducer from "./redux/isUrlBaseSlice";
+import singleImageReducer from "./redux/singleImageSlice";
+import userTokenReducer from "./redux/userTokenSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,7 +15,6 @@ const store = configureStore({
     loading: loadingReducer,
     urlBase: urlBaseReducer,
     singleImage: singleImageReducer,
-    isUserLoggedIn: isUserLoggedInReducer,
     userToken: userTokenReducer,
   },
 });

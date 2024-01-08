@@ -17,7 +17,7 @@ const GetSingleUser = async (req, res) => {
   try {
     const user = await User.findOne({ username: new RegExp(username, "i") });
     if (user !== null) {
-      res.status(200).json({ msg: `User created successfully!`, newUser: user });
+      res.status(200).json({ msg: `User found`, requestedUser: user });
     } else {
       res.status(404).json({ errorMsg: { msg: "User not found" } });
     }

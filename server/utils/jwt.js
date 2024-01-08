@@ -18,6 +18,7 @@ const attachCookiesToResponse = ({ res, user }) => {
   res.cookie("token", tokenValue, {
     httpOnly: true,
     expiresIn: "1h",
+    signed: true,
   });
   res.status(200).json({
     status: 200,

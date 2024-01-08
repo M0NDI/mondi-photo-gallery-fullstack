@@ -3,17 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // import state reducers
-import { updateSearchTerm } from "../features/userSearchTermSlice";
-import { pageReset } from "../features/currentPageSlice";
-import { imagesReset } from "../features/imagesSlice";
-import { useEffect } from "react";
+import { updateSearchTerm } from "../redux/userSearchTermSlice";
+import { pageReset } from "../redux/currentPageSlice";
+import { imagesReset } from "../redux/imagesSlice";
 
 const Categories = ({ handleSubmit }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // state selectors
-  const userSearchTerm = useSelector((state) => state.userSearchTerm.value);
   const currentPage = useSelector((state) => state.currentPage.value);
 
   const categoryClickSearch = async (newSearchTerm, e) => {

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getImages, getRandomPhotos } from "./API/Remote/api.js";
+import { getImages } from "./API/Remote/api.js";
 
 import Images from "./components/Images";
 import Navbar from "./components/Navbar";
@@ -17,9 +17,9 @@ import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 
 // import state reducers
-import { imagesReset, addItems } from "./features/imagesSlice";
-import { increment } from "./features/currentPageSlice.js";
-import { updateSearchTerm } from "./features/userSearchTermSlice";
+import { imagesReset, addItems } from "./redux/imagesSlice";
+import { increment } from "./redux/currentPageSlice.js";
+import { updateSearchTerm } from "./redux/userSearchTermSlice";
 
 function App() {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ function App() {
 
   // handle user search input
   const handleInputChange = (e) => {
-    const searchTermUpdate = dispatch(updateSearchTerm(e.target.value));
+    dispatch(updateSearchTerm(e.target.value));
   };
 
   // get next page of search results

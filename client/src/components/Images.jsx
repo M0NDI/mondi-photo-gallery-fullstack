@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import ImageHoverOptions from "./ImageHoverOptions";
 import { Link } from "react-router-dom";
-import { imagesReset } from "../features/imagesSlice";
+import { imagesReset } from "../redux/imagesSlice";
 
 const Images = () => {
   const dispatch = useDispatch();

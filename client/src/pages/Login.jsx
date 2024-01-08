@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // import redux state functions
-import { setUserToken } from "../features/userTokenSlice";
+import { setUserToken } from "../redux/userTokenSlice";
 
 const Login = () => {
   const navigate = useNavigate();

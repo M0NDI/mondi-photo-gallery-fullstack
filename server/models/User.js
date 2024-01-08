@@ -20,6 +20,9 @@ const UserSchema = new Schema({
       message: "Invalid email format",
     },
   },
+  role: {
+    type: String,
+  },
   token: {
     type: String,
   },
