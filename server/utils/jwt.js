@@ -7,11 +7,6 @@ const createJwt = ({ payload }) => {
   return token;
 };
 
-const isTokenValid = ({ token }) => {
-  const valid = jwt.verify(token, process.env.JWT_SECRET);
-  return valid;
-};
-
 const attachCookiesToResponse = ({ res, user }) => {
   const token = createJwt({ payload: user });
   const tokenValue = token;
@@ -26,6 +21,11 @@ const attachCookiesToResponse = ({ res, user }) => {
     msg: "Successfully logged in",
     token: tokenValue,
   });
+};
+
+const isTokenValid = ({ token }) => {
+  const valid = jwt.verify(token, process.env.JWT_SECRET);
+  return valid;
 };
 
 module.exports = {

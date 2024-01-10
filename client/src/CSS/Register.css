@@ -19,5 +19,5 @@
 }
 
 .input-empty {
-    outline: 2px solid red !important;
+    outline: 2px solid rgb(255, 168, 168)(255, 0, 0) !important;
 }

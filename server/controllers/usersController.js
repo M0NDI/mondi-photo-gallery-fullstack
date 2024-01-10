@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 
 const GetAllUsers = async (req, res) => {
   try {
+    console.log(req.user)
     const users = await User.find({});
     return res.status(200).json(users);
   } catch (error) {
@@ -13,6 +14,7 @@ const GetAllUsers = async (req, res) => {
 };
 
 const GetSingleUser = async (req, res) => {
+  console.log(req.user)
   const { username } = req.params;
   try {
     const user = await User.findOne({ username: new RegExp(username, "i") });

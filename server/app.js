@@ -22,11 +22,10 @@ app.use(cookieParser(process.env.JWT_SECRET)); // cookies now in req.signedCooki
 // routers
 const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
-const isAuthenticated = require("./utils/authenticate");
 
 // routes
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", isAuthenticated, userRouter);
+app.use("/api/v1/users", userRouter);
 
 app.get("/", (req, res) => {
   console.log(req.signedCookies);

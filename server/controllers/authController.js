@@ -51,7 +51,6 @@ const Register = async (req, res) => {
       id: createUser._id,
     };
     const token = createJwt({ payload: tokenUser });
-    const valid = isTokenValid({ token });
 
     res.status(200).json({
       status: 200,
@@ -89,7 +88,7 @@ const Login = async (req, res) => {
       });
     }
 
-    const tokenUser = { username: user.username, email: user.email, id: user._id };
+    const tokenUser = { username: user.username, email: user.email, role:user.role, id: user._id };
     attachCookiesToResponse({ res, user: tokenUser });
   } catch (error) {
     console.log(error);

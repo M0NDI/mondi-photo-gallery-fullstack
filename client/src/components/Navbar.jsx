@@ -187,7 +187,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
               />
               {!userToken ? (
                 <>
-                  <NavLink to="/register">
+                  <NavLink to="/register" className='t-mr-4'>
                     <RegisterButton>Register</RegisterButton>
                   </NavLink>
                   <NavLink to="/login">
