@@ -26,7 +26,6 @@ const LoginUser = async (username, password) => {
       },
       { withCredentials: true }
     );
-    console.log(user.data)
     return user.data;
   } catch (error) {
     console.error(error);
@@ -42,8 +41,35 @@ const LogoutUser = async () => {
   }
 };
 
+const ShowCurrentUser = async () => {
+  try {
+    const currentUser = await axios.get(usersUrl + "/showCurrentUser", { withCredentials: true });
+    if (!currentUser && !currentUser.status === 200) {
+      return null;
+    } else {
+      return currentUser;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const ShowCurrentUserLikedImages = async () => {
+  try {
+    const likedImages = await axios.get(usersUrl + "/showCurrentUserLikedImages", {
+      withCredentials: true,
+    });
+    if (!likedImages) {
+      console.log("Error occured on the client when getting likedImages");
+    } else {
+      return likedImages.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // make test call below to backend to authenticate user using withCredentials and save response to variable
 // then if response has a value, use that to conditionally render pages/components on the front-end
 
-
-export { RegisterUser, LoginUser, LogoutUser };
+export { RegisterUser, LoginUser, LogoutUser, ShowCurrentUser, ShowCurrentUserLikedImages };

@@ -9,7 +9,7 @@ import { imagesReset } from "../redux/imagesSlice";
 
 const Images = () => {
   const dispatch = useDispatch();
-  
+
   const images = useSelector((state) => state.images.value);
 
   const [hoveredImage, setHoveredImage] = useState(null);
@@ -18,13 +18,13 @@ const Images = () => {
     window.scrollTo({ top: 0 });
   }, [location.pathname]);
 
-  const numColumns = 3;
-  const columns = Array.from({ length: numColumns }, () => []);
+  const numOfColumns = 3;
+  const imagesArray = Array.from({ length: numOfColumns }, () => []); // create an array with numOfColumns sub arrays
 
   // Distribute images across columns
   images.forEach((image, index) => {
-    const columnIndex = index % numColumns;
-    columns[columnIndex].push(image);
+    const indexOfSubArray = index % numOfColumns;
+    imagesArray[indexOfSubArray].push(image);
   });
 
   const handleMouseEnter = (event) => {
@@ -46,7 +46,7 @@ const Images = () => {
   return (
     <div className="main-container t-mt-44">
       <div className="gallery-container">
-        {columns.map((column, columnIndex) => (
+        {imagesArray.map((column, columnIndex) => (
           <div className={`column-${columnIndex + 1}`} key={columnIndex}>
             {column.map((image, index) => (
               <div

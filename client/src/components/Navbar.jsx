@@ -2,7 +2,7 @@ import "../CSS/Navbar.css";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Categories from "./Categories";
-import MyAccount from "./MyAccount.jsx";
+import MyAccountNavIcon from "./MyAccountNavIcon.jsx";
 
 import mondiLogo from "../assets/images/logos/mondi-logo-text-only.png";
 import { Link, NavLink } from "react-router-dom";
@@ -14,10 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { imagesReset } from "../redux/imagesSlice.js";
 import { resetSearchTerm } from "../redux/userSearchTermSlice.js";
 import { pageReset } from "../redux/currentPageSlice.js";
-import { resetUserToken } from "../redux/userTokenSlice.js";
+import { setLoggedInTrue, setLoggedInFalse } from "../redux/isUserLoggedInSlice.js";
 
 //api
 import { LogoutUser } from "../API/Backend/api.js";
+import { useEffect } from "react";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
   const images = useSelector((state) => state.images.value);
   const userSearchTerm = useSelector((state) => state.userSearchTerm.value);
   const currentPage = useSelector((state) => state.currentPage.value);
-  const userToken = useSelector((state) => state.userToken.value);
+  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
 
   const resetDataOnLogoClick = () => {
     dispatch(pageReset());
@@ -37,7 +38,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
   const logout = async () => {
     try {
       await LogoutUser();
-      dispatch(resetUserToken());
+      dispatch(setLoggedInFalse());
     } catch (error) {
       console.log(error);
     }
@@ -182,12 +183,13 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
                 className="t-w-full t-h-12 t-rounded-3xl t-border-0 t-pl-12 t-pr-12 t-mr-2"
                 type="search"
                 placeholder="Search"
+                id="nav-search-input"
                 value={userSearchTerm}
                 onChange={handleInputChange}
               />
-              {!userToken ? (
+              {!isUserLoggedIn ? (
                 <>
-                  <NavLink to="/register" className='t-mr-4'>
+                  <NavLink to="/register" className="t-mr-4">
                     <RegisterButton>Register</RegisterButton>
                   </NavLink>
                   <NavLink to="/login">
@@ -196,7 +198,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
                 </>
               ) : (
                 <>
-                  <MyAccount />
+                  <MyAccountNavIcon />
                   <LogoutButton
                     variant="outlined"
                     color="error"

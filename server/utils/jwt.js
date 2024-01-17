@@ -15,12 +15,6 @@ const attachCookiesToResponse = ({ res, user }) => {
     expiresIn: "1h",
     signed: true,
   });
-  res.status(200).json({
-    status: 200,
-    success: true,
-    msg: "Successfully logged in",
-    token: tokenValue,
-  });
 };
 
 const isTokenValid = ({ token }) => {

@@ -17,10 +17,6 @@ const RandomPhotos = () => {
   const [randomImages, setRandomImages] = useState([]);
   const [hoveredImage, setHoveredImage] = useState(null);
 
-  // redux state
-  const urlBase = useSelector((state) => state.urlBase.value);
-  const currentPage = useSelector((state) => state.currentPage.value);
-
   const numColumns = 3;
   const columns = Array.from({ length: numColumns }, () => []);
 

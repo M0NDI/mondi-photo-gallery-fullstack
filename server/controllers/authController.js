@@ -3,6 +3,7 @@ const UserSchema = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { createJwt, isTokenValid, attachCookiesToResponse } = require("../utils/jwt");
+const createTokenUser = require("../utils/createTokenUser");
 require("dotenv").config();
 
 const Register = async (req, res) => {
@@ -45,11 +46,7 @@ const Register = async (req, res) => {
       imageCollection: [],
     });
 
-    const tokenUser = {
-      username: createUser.username,
-      email: createUser.email,
-      id: createUser._id,
-    };
+    const tokenUser = createTokenUser(createUser);
     const token = createJwt({ payload: tokenUser });
 
     res.status(200).json({
@@ -88,8 +85,9 @@ const Login = async (req, res) => {
       });
     }
 
-    const tokenUser = { username: user.username, email: user.email, role:user.role, id: user._id };
+    const tokenUser = createTokenUser(user);
     attachCookiesToResponse({ res, user: tokenUser });
+    res.status(200).json({success: 'User logged in'})
   } catch (error) {
     console.log(error);
   }

@@ -16,7 +16,6 @@ const PhotoPage = () => {
       const image = await getSingleImage(id);
       if (image) {
         dispatch(addItem(image));
-        console.log(image);
         console.log(singleImage)
       }
       return image;
