@@ -11,18 +11,16 @@ const {
   deleteUser,
   showCurrentUser,
   updateUserPassword,
-  showCurrentUserLikedImages
 } = require("../controllers/usersController");
 
 router.route("/showCurrentUser").get(authenticateUser, showCurrentUser);
 router.route("/updateUserPassword").patch(authenticateUser, updateUserPassword);
-router.route("/showCurrentUserLikedImages").get(authenticateUser, showCurrentUserLikedImages)
 
 router
   .route("/")
   .get(authenticateUser, authorizeUserPermissions("admin"), getAllUsers)
   .patch(authenticateUser, updateUser)
-  .delete(deleteUser);
+  .delete(authenticateUser, authorizeUserPermissions("admin"), deleteUser);
 
 router.route("/:username").get(getSingleUser);
 

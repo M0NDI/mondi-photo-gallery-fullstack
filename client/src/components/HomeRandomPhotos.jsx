@@ -1,58 +1,67 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-key */
+import "../CSS/Images.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import "../CSS/Images.css";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 import LikeImageHoverOption from "./LikeImageHoverOption";
 import RemoveImageHoverOption from "./RemoveImageHoverOption";
 import { Link } from "react-router-dom";
-import { imagesReset } from "../redux/imagesSlice";
+import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { getRandomPhotos } from "../API/Remote/api";
+import lodash, { random } from "lodash";
 import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
 import { showCurrentUserLikedImages } from "../API/Backend/api";
 import { setImageLikedFalse, setImageLikedTrue } from "../redux/isImageLikedSlice";
 
-const Images = () => {
+// import redux state
+
+const RandomPhotos = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
-  const images = useSelector((state) => state.images.value);
+  // react state
+  const [randomImages, setRandomImages] = useState([]);
+  const [hoveredImage, setHoveredImage] = useState(null);
+
+  // redux state
   const isImageLiked = useSelector((state) => state.isImageLiked.value);
-  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
 
-  const [hoveredImage, setHoveredImage] = useState([]);
+  const numColumns = 3;
+  const columns = Array.from({ length: numColumns }, () => []);
 
-  const numOfColumns = 3;
-  const imagesArray = Array.from({ length: numOfColumns }, () => []); // create an array with numOfColumns sub arrays
-
-  // Distribute images across columns
-  images.forEach((image, index) => {
-    const indexOfSubArray = index % numOfColumns;
-    imagesArray[indexOfSubArray].push(image);
+  // Distribute images across columns dynamically
+  randomImages.forEach((image, index) => {
+    const columnIndex = index % numColumns;
+    columns[columnIndex].push(image);
   });
 
-  const handleMouseEnter = async (event) => {
-    const image = event;
-    setHoveredImage((prevImage) => {
-      return image; // Set hoveredImage to the most recent image
-    });
-    const fetchLikedImages = await showCurrentUserLikedImages();
-    if (fetchLikedImages) {
-      const isHoveredImageLiked = fetchLikedImages.data.likedImages.find(
-        (photo) => photo.id === image.id
-      );
-      if (isHoveredImageLiked) {
-        dispatch(setImageLikedTrue());
-        console.log("Image already liked!");
-      } else {
-        dispatch(setImageLikedFalse());
-        console.log("Image NOT liked");
+  const randomPhotos = async () => {
+    try {
+      const photos = await getRandomPhotos();
+      if (photos) {
+        setRandomImages((prevPhotos) => [...prevPhotos, ...photos]);
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleMouseLeave = () => {
-    setHoveredImage(null);
+  const handleMouseEnter = async (event) => {
+    const image = event;
+    console.log(image);
+    setHoveredImage((prevImage) => {
+      return image; // Set hoveredImage to the most recent image
+    });
+    const userLikedImages = await showCurrentUserLikedImages();
+    if (userLikedImages) {
+      const isImageLiked = userLikedImages.data.likedImages.find((photo) => photo.id === image.id);
+      if (isImageLiked) {
+        console.log("Image already liked!");
+        dispatch(setImageLikedTrue());
+      } else {
+        dispatch(setImageLikedFalse());
+      }
+    }
   };
 
   const handleAddToLiked = async () => {
@@ -63,18 +72,41 @@ const Images = () => {
     await removeImageFromLiked(hoveredImage);
   };
 
-  // prevent images from search results from displaying
+  const handleMouseLeave = () => {
+    setHoveredImage(null);
+  };
+
   useEffect(() => {
-    if (location.pathname === "/my-profile") {
-      dispatch(imagesReset());
+    setRandomImages([]);
+    if (location.pathname === "/") {
+      randomPhotos();
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = lodash.debounce(() => {
+      const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY / pageHeight >= 0.6) {
+        randomPhotos();
+      }
+    }, 40);
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [location.pathname]);
+
   return (
-    <div className="main-container t-mt-44">
-      {images.length > 0 ? (
+    <div className="main-container t-mt-48">
+      {randomImages.length > 0 ? (
         <div className="gallery-container">
-          {imagesArray.map((column, columnIndex) => (
+          {columns.map((column, columnIndex) => (
             <div className={`column-${columnIndex + 1}`} key={columnIndex}>
               {column.map((image, index) => (
                 <div
@@ -110,9 +142,7 @@ const Images = () => {
                   )}
                   {image.urls && image.urls.regular && (
                     <Link to={`/photo/${image.id}`} target="_blank">
-                      <>
-                        <img src={image.urls.regular} alt={image.alt_description} />
-                      </>
+                      <img src={image.urls.regular} alt={image.alt_description} />
                     </Link>
                   )}
                 </div>
@@ -132,4 +162,4 @@ const Images = () => {
   );
 };
 
-export default Images;
+export default RandomPhotos;

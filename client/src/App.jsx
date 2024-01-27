@@ -8,15 +8,15 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getImages } from "./API/Remote/api.js";
-import { ShowCurrentUser } from "./API/Backend/api.js";
+import { logoutUser, showCurrentUser } from "./API/Backend/api.js";
 
-import Images from "./components/Images";
+import Images from "./components/Images.jsx";
 import Navbar from "./components/Navbar";
-import RandomPhotos from "./components/RandomPhotos.jsx";
+import HomeRandomPhotos from "./components/HomeRandomPhotos.jsx";
 import PhotoPage from "./pages/PhotoPage.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
-import MyAccount from "./pages/MyAccount.jsx";
+import MyLikedPhotos from "./pages/MyLikedPhotos.jsx";
 
 // import state reducers
 import { imagesReset, addItems } from "./redux/imagesSlice";
@@ -41,11 +41,16 @@ function App() {
       const fetchImages = await getImages(userSearchTerm, currentPage);
       if (fetchImages && fetchImages.length > 0) {
         dispatch(addItems(fetchImages));
-        navigate(`/s/${userSearchTerm}`);
+        navigate(`/c/${userSearchTerm}`);
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // to be called on page refresh to clear expired cookies
+  const clearCookie = async () => {
+    await logoutUser();
   };
 
   // handle user search input
@@ -68,9 +73,10 @@ function App() {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const currentUser = await ShowCurrentUser();
+      const currentUser = await showCurrentUser();
       if (!currentUser) {
         dispatch(setLoggedInFalse());
+        await clearCookie(); // clear expired cookies in browser if user no longer logged in
       }
     };
     fetchCurrentUser();
@@ -86,19 +92,21 @@ function App() {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [location.pathname]);
+
   // load next page of results only if user scrolls down to a certain point on page
   useEffect(() => {
     if (
       location.pathname !== "/register" &&
       location.pathname !== "/my-profile" &&
-      location.pathname !== "/my-account" &&
+      location.pathname !== "/my-liked-photos" &&
       location.pathname !== "/settings" &&
       !location.pathname.startsWith("/photo/")
     ) {
-      if (loading) return;
-
       /* 
-        lodash's debounce method used to delay getNextPage being called again to prevent requests
+        "if (loading) return;" and lodash's debounce method used to delay getNextPage being called again to prevent requests
         being made while scrollbar moves up after a single page is loaded. Without debounce,
         multiple pages would be called after scrolling beyond the 0.6 (60% down) mark on the page.
 
@@ -110,6 +118,7 @@ function App() {
         By adding a delay, the scrollbar is allowed to move to it's expected location without triggering
         requests to the API.
       */
+      if (loading) return;
       const handleScroll = _.debounce(() => {
         const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
         if (window.scrollY / pageHeight >= 0.6) {
@@ -129,12 +138,12 @@ function App() {
     <div className="app t-h-screen">
       <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
       <Routes>
-        <Route path="/" element={<RandomPhotos />} />
+        <Route path="/" element={<HomeRandomPhotos />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/my-account" element={<MyAccount />} />
+        <Route path="/my-liked-photos" element={<MyLikedPhotos />} />
         <Route path="/photo/:id" element={<PhotoPage />} />
-        <Route path="/s/:searchTerm" element={<Images />} />
+        <Route path="/c/:searchTerm" element={<Images />} />
       </Routes>
     </div>
   );

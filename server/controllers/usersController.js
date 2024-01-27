@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const createTokenUser = require("../utils/createTokenUser");
 const { attachCookiesToResponse } = require("../utils/jwt");
 
+// GET ALL USERS
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({});
@@ -14,6 +15,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// GET SINGLE USER
 const getSingleUser = async (req, res) => {
   console.log(req.user);
   const { username } = req.params;
@@ -32,6 +34,7 @@ const getSingleUser = async (req, res) => {
   }
 };
 
+// UPDATE USER
 const updateUser = async (req, res) => {
   const { username, email } = req.body;
   if (!username || !email) {
@@ -47,6 +50,7 @@ const updateUser = async (req, res) => {
   res.status(200).json({ success: "User updated successfully." });
 };
 
+// DELETE USER
 const deleteUser = async (req, res) => {
   const { username } = req.body;
 
@@ -62,12 +66,14 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// UPDATE USER PASSWORD
 const updateUserPassword = async (req, res, next) => {
-  const { username, oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword } = req.body;
+  const { username } = req.user;
   try {
-    const findUser = await User.findOne({ username });
+    const user = await User.findOne({ username });
 
-    if (!findUser) {
+    if (!user) {
       return res.status(404).json({ ERR: "User not found, cannot change password." });
     }
     if (!oldPassword || !newPassword || !username) {
@@ -76,7 +82,7 @@ const updateUserPassword = async (req, res, next) => {
         .json({ ERR: "Please provide your username, old password and new password." });
     }
 
-    const validateOldPassword = await bcrypt.compare(oldPassword, findUser.password);
+    const validateOldPassword = await bcrypt.compare(oldPassword, user.password);
     if (!validateOldPassword) {
       return res.status(401).json({ ERR: "Given password and existing password do not match." });
     }
@@ -94,35 +100,16 @@ const updateUserPassword = async (req, res, next) => {
   }
 };
 
+// SHOW CURRENT USER
 const showCurrentUser = (req, res) => {
   try {
-    const currentUser = req.user;
-    if (!currentUser) {
+    if (!req.user) {
       return res.status(401).json({ ERR: "There is no current user.", statusCode: 401 });
     } else {
       res.status(200).json({ user: req.user });
     }
   } catch (error) {
     console.log(error);
-  }
-};
-
-const showCurrentUserLikedImages = async (req, res) => {
-  const { username } = req.user;
-
-  try {
-    const user = await User.findOne({ username });
-
-    if (!user) {
-      console.log("User not found");
-      return res.status(404).json({ ERR: "Cannot get likedImages. User not found." });
-    } else {
-      console.log("Current user's liked photos:", user.likedPhotos);
-      res.status(200).json({ likedImages: user.likedPhotos });
-    }
-  } catch (error) {
-    console.log("Error:", error);
-    return res.status(500).json({ ERR: "Internal Server Error" });
   }
 };
 
@@ -133,5 +120,4 @@ module.exports = {
   showCurrentUser,
   updateUser,
   updateUserPassword,
-  showCurrentUserLikedImages,
 };

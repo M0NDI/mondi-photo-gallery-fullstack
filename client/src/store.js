@@ -11,20 +11,20 @@ import {
   REGISTER,
 } from "redux-persist";
 
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import storage from "redux-persist/lib/storage";
 
 import imagesReducer from "./redux/imagesSlice";
 import currentPageReducer from "./redux/currentPageSlice";
 import userSearchTermReducer from "./redux/userSearchTermSlice";
 import loadingReducer from "./redux/loadingSlice";
-import urlBaseReducer from "./redux/isUrlBaseSlice";
 import singleImageReducer from "./redux/singleImageSlice";
 import isUserLoggedInReducer from "./redux/isUserLoggedInSlice";
+import isImageLikedSlice from "./redux/isImageLikedSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["images", "currentPage", "userSearchTerm", "loading", "urlBase", "singleImage"],
+  blacklist: ["images", "currentPage", "userSearchTerm", "loading", "singleImage"],
 };
 
 const rootReducer = combineReducers({
@@ -32,9 +32,9 @@ const rootReducer = combineReducers({
   currentPage: currentPageReducer,
   userSearchTerm: userSearchTermReducer,
   loading: loadingReducer,
-  urlBase: urlBaseReducer,
   singleImage: singleImageReducer,
   isUserLoggedIn: isUserLoggedInReducer,
+  isImageLiked: isImageLikedSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

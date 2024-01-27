@@ -1,8 +1,9 @@
-import { LoginUser } from "../API/Backend/api";
+import { loginUser } from "../API/Backend/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoggedInTrue } from "../redux/isUserLoggedInSlice";
+import "../CSS/Register.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      const login = await LoginUser(username, userPassword);
+      const login = await loginUser(username, userPassword);
       if (login.success) {
         dispatch(setLoggedInTrue());
         navigate("/");
@@ -42,21 +43,19 @@ const Login = () => {
           className={`register-input register-input-username ${!username ? "input-empty" : ""}`}
           type="text"
           placeholder="username"
+          id="login-username-field"
           autoComplete="on"
           onChange={handleUsernameInputChange}
         />
         <input
-          className={`register-input register-input-password ${!userPassword ? "input-empty" : ""}`}
+          className={`register-input login-input-password ${!userPassword ? "input-empty" : ""}`}
           type="password"
           placeholder="password"
+          id="login-password-field"
           autoComplete="on"
           onChange={handlePasswordInputChange}
         />
-        <input
-          type="submit"
-          placeholder="submit"
-          className="register-input register-input-submit"
-        />
+        <input type="submit" placeholder="submit" className="register-input login-input-submit" />
       </form>
     </div>
   );

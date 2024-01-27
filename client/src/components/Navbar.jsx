@@ -17,8 +17,7 @@ import { pageReset } from "../redux/currentPageSlice.js";
 import { setLoggedInTrue, setLoggedInFalse } from "../redux/isUserLoggedInSlice.js";
 
 //api
-import { LogoutUser } from "../API/Backend/api.js";
-import { useEffect } from "react";
+import { logoutUser } from "../API/Backend/api.js";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {
   const dispatch = useDispatch();
@@ -37,7 +36,7 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
 
   const logout = async () => {
     try {
-      await LogoutUser();
+      await logoutUser();
       dispatch(setLoggedInFalse());
     } catch (error) {
       console.log(error);

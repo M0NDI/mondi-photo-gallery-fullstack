@@ -2,8 +2,9 @@ import axios from "axios";
 
 const authUrl = "http://localhost:3000/api/v1/auth";
 const usersUrl = "http://localhost:3000/api/v1/users";
+const imagesUrl = "http://localhost:3000/api/v1/images";
 
-const RegisterUser = async (username, password, email) => {
+const registerUser = async (username, password, email) => {
   try {
     const user = await axios.post(authUrl + "/register", {
       username: username,
@@ -16,7 +17,7 @@ const RegisterUser = async (username, password, email) => {
   }
 };
 
-const LoginUser = async (username, password) => {
+const loginUser = async (username, password) => {
   try {
     const user = await axios.post(
       authUrl + "/login",
@@ -32,7 +33,7 @@ const LoginUser = async (username, password) => {
   }
 };
 
-const LogoutUser = async () => {
+const logoutUser = async () => {
   try {
     const logout = await axios.get(authUrl + "/logout", { withCredentials: true });
     return logout;
@@ -41,35 +42,74 @@ const LogoutUser = async () => {
   }
 };
 
-const ShowCurrentUser = async () => {
+const showCurrentUser = async () => {
   try {
     const currentUser = await axios.get(usersUrl + "/showCurrentUser", { withCredentials: true });
     if (!currentUser && !currentUser.status === 200) {
       return null;
     } else {
-      return currentUser;
+      return currentUser.data;
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-const ShowCurrentUserLikedImages = async () => {
+const addImageToLiked = async (likedPhoto) => {
   try {
-    const likedImages = await axios.get(usersUrl + "/showCurrentUserLikedImages", {
+    const addToLiked = await axios.post(
+      imagesUrl + "/addImageToLiked",
+      { likedPhoto },
+      { withCredentials: true }
+    );
+    if (!addToLiked) {
+      return { ERR: "There was an error liking this image." };
+    } else {
+      return addToLiked;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeImageFromLiked = async (imageToRemove) => {
+  try {
+    const removeImage = await axios.post(
+      imagesUrl + "/removeLikedImage",
+      { imageToRemove },
+      { withCredentials: true }
+    );
+    if (!imageToRemove) {
+      return { ERR: "There was an error removing this image" };
+    } else {
+      return removeImage;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const showCurrentUserLikedImages = async () => {
+  try {
+    const likedImages = await axios.get(imagesUrl + "/showCurrentUserLikedImages", {
       withCredentials: true,
     });
     if (!likedImages) {
       console.log("Error occured on the client when getting likedImages");
     } else {
-      return likedImages.data;
+      return likedImages;
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-// make test call below to backend to authenticate user using withCredentials and save response to variable
-// then if response has a value, use that to conditionally render pages/components on the front-end
-
-export { RegisterUser, LoginUser, LogoutUser, ShowCurrentUser, ShowCurrentUserLikedImages };
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  showCurrentUser,
+  addImageToLiked,
+  removeImageFromLiked,
+  showCurrentUserLikedImages,
+};

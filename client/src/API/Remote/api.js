@@ -34,7 +34,6 @@ const getSingleImage = async (imageId) => {
         Authorization: `Client-ID ${accessKey}`
       }
     });
-    console.log(response.data)
     return response.data
   } catch (error) {
     console.log(error);
@@ -52,7 +51,6 @@ const getRandomPhotos = async () => {
       },
     });
     if (response) {
-      console.log(response);
       return response.data;
     }
   } catch (error) {

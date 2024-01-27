@@ -1,5 +1,5 @@
 .register-form {
-    background-color: #0c152a;
+    background-color: #d0d1d2;
 }
 
 .register-main-container form input {
@@ -16,6 +16,10 @@
 
 .register-input {
     width: 50%;
+}
+
+.input-empty {
+    border: 2px solid red !important;
 }
 
 .input-empty {

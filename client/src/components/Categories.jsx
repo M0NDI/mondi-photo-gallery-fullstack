@@ -21,11 +21,11 @@ const Categories = ({ handleSubmit }) => {
     dispatch(imagesReset());
 
     dispatch(updateSearchTerm(newSearchTerm));
-    navigate(`/s/${newSearchTerm}`);
-    // Await the completion of the async operation in handleSubmit
-    await handleSubmit(newSearchTerm, currentPage, e);
+    const fetchCategory = await handleSubmit(newSearchTerm, currentPage, e);
+    if (fetchCategory) {
+      navigate(`/c/${newSearchTerm}`);
+    }
   };
-
 
   return (
     <div className="categories-container scroll-menu t-w-full t-mt-3 t-text-center">

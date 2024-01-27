@@ -11,6 +11,8 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import "../CSS/MyAccount.css";
 import { NavLink } from "react-router-dom";
+import { showCurrentUser } from "../API/Backend/api";
+import { useState, useEffect } from "react";
 
 const MyAccount = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,6 +23,21 @@ const MyAccount = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const user = await showCurrentUser();
+      if (user) {
+        console.log("HERE'S USER", user);
+        setCurrentUser(user);
+      }
+
+      console.log(currentUser);
+    };
+    getCurrentUser();
+  }, []);
 
   return (
     <React.Fragment>
@@ -34,7 +51,11 @@ const MyAccount = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 44, height: 44, backgroundColor: "#0c152a" }}>A</Avatar>
+            <Avatar sx={{ width: 44, height: 44, backgroundColor: "#0c152a" }}>
+              {currentUser &&
+                currentUser.user &&
+                currentUser.user.username.substring(0, 2).toUpperCase()}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -81,9 +102,9 @@ const MyAccount = () => {
             <Avatar /> Profile
           </MenuItem>
         </NavLink>
-        <NavLink to="/my-account" className="t-w-full t-h-full">
+        <NavLink to="/my-liked-photos" className="t-w-full t-h-full">
           <MenuItem onClick={handleClose} className="menu-item">
-            <Avatar /> My Account
+            <Avatar /> My Liked Photos
           </MenuItem>
         </NavLink>
         <Divider />

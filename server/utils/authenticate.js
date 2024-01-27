@@ -10,24 +10,27 @@ const authenticateUser = (req, res, next) => {
       next();
     } else {
       // User is not authenticated
-      res.status(401).json({ error: "User authentication failed" });
+      res.status(401).json({ ERR: "User authentication failed" });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ errorMessage: error });
+    res.status(500).json({ ERR: error });
   }
 };
 
 const authorizeUserPermissions = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res
-        .status(403)
-        .json({ error: { errorMsg: "Unauthorized. User is not admin", status: 403 } });
-    }
-    console.log("admin authorised");
-    next();
-  };
+  try {
+    return (req, res, next) => {
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({ ERR: "Unauthorized. User is not admin" });
+      }
+      console.log("admin authorised");
+      next();
+    };
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ ERR: error });
+  }
 };
 
 module.exports = {
