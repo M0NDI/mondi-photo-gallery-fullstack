@@ -2,8 +2,8 @@ import { useState } from "react";
 import { registerUser } from "../API/Backend/api";
 import "../CSS/Register.css";
 // import cameraPhoto from "../assets/images/camera-leaves.jpg";
-import mountainBlue from "../assets/images/mountain-blue1.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Register = () => {
 
   const handleUsernameInputChange = (event) => {
     setUsername(event.target.value);
-    console.log(event.target.value)
+    console.log(event.target.value);
   };
 
   const handlePasswordInputChange = (event) => {
@@ -25,51 +25,80 @@ const Register = () => {
     setUserEmail(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
-    const register = await RegisterUser(username, userPassword, userEmail);
+    const register = await registerUser(username, userPassword, userEmail);
     if (register) {
       navigate("/login");
+      toast("Successfully registered!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast(
+        "Cannot register your account. Username is already taken or one of the inputs is empty.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
     }
   };
 
   return (
-    <div className="register-main-container t-flex t-items-center t-pt-20 t-h-full t-bg-zinc-200">
-      <div className="register-main-photo t-h-full t-w-11/12 t-flex">
-        <img src={mountainBlue} className="t-w-full object-fit-cover" />
+    <div className="register-main-container t-flex t-flex-col t-items-center t-justify-center t-h-full t-w-full t-bg-zinc-200 t-mt-10">
+      <div className="register-sub-container t-h-1/2 t-w-1/2 t-flex t-flex-col t-justify-center">
+        <div className="register-header t-flex t-justify-center t-text-6xl t-text-white t-mb-8">
+          REGISTER
+          <div className="register-header-dot t-text-amber-500">.</div>
+        </div>
+        <form onSubmit={handleRegister} className="register-form t-flex t-flex-col t-items-center">
+          <input
+            className="register-input register-input-username t-h-10"
+            type="text"
+            placeholder="username"
+            id="registration-username-field"
+            onChange={handleUsernameInputChange}
+          />
+          <input
+            className="register-input register-input-password t-h-10"
+            type="password"
+            placeholder="password"
+            id="registration-password-field"
+            onChange={handlePasswordInputChange}
+          />
+          <input
+            className="register-input register-input-email t-h-10"
+            type="text"
+            placeholder="email"
+            id="registration-email-field"
+            onChange={handleEmailInputChange}
+          />
+          <input
+            className="register-input register-input-submit t-h-8 t-bg-amber-500"
+            type="submit"
+            placeholder="submit"
+          />
+          <div className="t-text-white t-mt-4 t-text-xs">
+            ALREADY HAVE AN ACCOUNT?
+            <Link to={"/login"} className="t-text-amber-500 t-ml-2 t-text-base">
+              Login here!
+            </Link>
+          </div>
+        </form>
       </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="register-form t-flex t-w-full t-h-full t-flex-col t-justify-center t-items-center"
-      >
-        <input
-          className={`register-input register-input-username ${!username ? "input-empty" : ""}`}
-          type="text"
-          placeholder="username"
-          id="registration-username-field"
-          onChange={handleUsernameInputChange}
-        />
-        <input
-          className={`register-input register-input-password ${!userPassword ? "input-empty" : ""}`}
-          type="password"
-          placeholder="password"
-          id="registration-password-field"
-          onChange={handlePasswordInputChange}
-        />
-        <input
-          className={`register-input register-input-email ${!userEmail ? "input-empty" : ""}`}
-          type="text"
-          placeholder="email"
-          id="registration-email-field"
-          onChange={handleEmailInputChange}
-        />
-        <input
-          type="submit"
-          placeholder="submit"
-          className="register-input register-input-submit"
-        />
-      </form>
     </div>
   );
 };

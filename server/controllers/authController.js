@@ -19,15 +19,15 @@ const Register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // validate user input
-    if (!(username && password && email)) {
-      return res.status(400).send("Inputs cannot be empty");
+    if (!username || !password || !email) {
+      return res.status(400).json({ ERR: "Inputs cannot be empty", statusCode: 400 });
     }
 
     // check if user exists in database
     const user = await UserSchema.findOne({ username });
 
     if (user) {
-      return res.status(409).send("User already exists.");
+      return res.status(409).json({ ERR: "User already exists", status: 409 });
     }
 
     let userCount = await UserSchema.countDocuments({});
@@ -67,7 +67,7 @@ const Login = async (req, res) => {
       return res.json({ ERROR: "Please provide email and password" });
     }
 
-    const user = await UserSchema.findOne({ username: new RegExp(username, "i") });
+    const user = await UserSchema.findOne({ username: username.toLowerCase() });
     if (!user) {
       return res.status(404).json({
         status: 404,
@@ -87,7 +87,7 @@ const Login = async (req, res) => {
 
     const tokenUser = createTokenUser(user);
     attachCookiesToResponse({ res, user: tokenUser });
-    res.status(200).json({success: 'User logged in'})
+    res.status(200).json({ success: "User logged in", user: user.username, success: true });
   } catch (error) {
     console.log(error);
   }

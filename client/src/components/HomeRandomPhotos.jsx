@@ -4,20 +4,19 @@ import Box from "@mui/material/Box";
 import LikeImageHoverOption from "./LikeImageHoverOption";
 import RemoveImageHoverOption from "./RemoveImageHoverOption";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { getRandomPhotos } from "../API/Remote/api";
-import lodash, { random } from "lodash";
+import lodash from "lodash";
 import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
 import { showCurrentUserLikedImages } from "../API/Backend/api";
 import { setImageLikedFalse, setImageLikedTrue } from "../redux/isImageLikedSlice";
+import { toast } from "react-toastify";
 
 // import redux state
 
 const RandomPhotos = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
 
   // react state
   const [randomImages, setRandomImages] = useState([]);
@@ -25,6 +24,7 @@ const RandomPhotos = () => {
 
   // redux state
   const isImageLiked = useSelector((state) => state.isImageLiked.value);
+  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
 
   const numColumns = 3;
   const columns = Array.from({ length: numColumns }, () => []);
@@ -56,7 +56,6 @@ const RandomPhotos = () => {
     if (userLikedImages) {
       const isImageLiked = userLikedImages.data.likedImages.find((photo) => photo.id === image.id);
       if (isImageLiked) {
-        console.log("Image already liked!");
         dispatch(setImageLikedTrue());
       } else {
         dispatch(setImageLikedFalse());
@@ -65,11 +64,57 @@ const RandomPhotos = () => {
   };
 
   const handleAddToLiked = async () => {
-    await addImageToLiked(hoveredImage);
+    const addToLiked = await addImageToLiked(hoveredImage);
+    if (addToLiked && isUserLoggedIn === true) {
+      toast("Image liked!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast("Cannot perform action because you are not logged in!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   const handleRemoveFromLiked = async () => {
-    await removeImageFromLiked(hoveredImage);
+    const removeFromLiked = await removeImageFromLiked(hoveredImage);
+    if (removeFromLiked && isUserLoggedIn === true) {
+      toast("Image unliked!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast("Cannot perform action because you are not logged in!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
   const handleMouseLeave = () => {
@@ -154,7 +199,6 @@ const RandomPhotos = () => {
         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className="t-flex t-flex-col">
             <CircularProgress className="t-m-auto t-mb-2" />
-            <h6>Loading images...</h6>
           </div>
         </Box>
       )}

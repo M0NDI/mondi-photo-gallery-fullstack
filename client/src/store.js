@@ -24,7 +24,7 @@ import isImageLikedSlice from "./redux/isImageLikedSlice";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["images", "currentPage", "userSearchTerm", "loading", "singleImage"],
+  blacklist: ["images", "currentPage", "userSearchTerm", "loading", "singleImage", "isImageLiked"],
 };
 
 const rootReducer = combineReducers({

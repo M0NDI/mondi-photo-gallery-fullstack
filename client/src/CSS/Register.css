@@ -1,27 +1,30 @@
 .register-form {
-    background-color: #d0d1d2;
+  background-color: #0c152a;
+}
+
+.register-main-container {
+  background-color: #0c152a !important;
+}
+
+.register-sub-container {
+  background-color: #0c152a;
+}
+
+.register-header {
+  background-color: #0c152a;
 }
 
 .register-main-container form input {
-    margin: 5px;
-    border-radius: 5px;
-    border: none;
-    outline: 1px solid #0c152a;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  outline: 1px solid #0c152a;
 }
 
 .register-main-container form input::placeholder {
   color: #0c152a;
-  padding-left: 0.5rem;
 }
 
-.register-input {
-    width: 50%;
-}
-
-.input-empty {
-    border: 2px solid red !important;
-}
-
-.input-empty {
-    outline: 2px solid rgb(255, 168, 168)(255, 0, 0) !important;
+.register-form input {
+  width: 24rem;
 }

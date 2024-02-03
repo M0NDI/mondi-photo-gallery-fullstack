@@ -1,0 +1,30 @@
+.login-form {
+  background-color: #0c152a;
+}
+
+.login-main-container {
+    background-color: #0c152a !important;
+}
+
+.login-sub-container {
+    background-color: #0c152a;
+}
+
+.login-header {
+  background-color: #0c152a;
+}
+
+.login-main-container form input {
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  outline: 1px solid #0c152a;
+}
+
+.login-main-container form input::placeholder {
+  color: #0c152a;
+}
+
+.login-form input {
+  width: 24rem;
+}

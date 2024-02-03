@@ -17,6 +17,7 @@ import PhotoPage from "./pages/PhotoPage.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import MyLikedPhotos from "./pages/MyLikedPhotos.jsx";
+import UserAccountSettings from "./pages/UserAccountSettings.jsx";
 
 // import state reducers
 import { imagesReset, addItems } from "./redux/imagesSlice";
@@ -142,6 +143,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/my-liked-photos" element={<MyLikedPhotos />} />
+        <Route path="/account-settings" element={<UserAccountSettings />} />
         <Route path="/photo/:id" element={<PhotoPage />} />
         <Route path="/c/:searchTerm" element={<Images />} />
       </Routes>

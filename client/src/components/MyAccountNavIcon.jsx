@@ -109,7 +109,7 @@ const MyAccount = () => {
         </NavLink>
         <Divider />
 
-        <NavLink to="/settings" onClick={handleClose} className="menu-item">
+        <NavLink to="/account-settings" onClick={handleClose} className="menu-item">
           <MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />

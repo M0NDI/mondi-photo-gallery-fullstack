@@ -1,0 +1,21 @@
+.dropdown-main:hover {
+  cursor: pointer;
+}
+
+.dropdown-menu li a:active {
+  background-color: #0c152a;
+}
+
+.dropdown-menu li a {
+  margin-right: 1rem !important;
+}
+
+.dropdown-menu li {
+  padding: 5px;
+}
+
+@media (max-width: 940px) {
+  .photo-main img {
+    width: 95vw;
+  }
+}

@@ -34,22 +34,6 @@ const getSingleUser = async (req, res) => {
   }
 };
 
-// UPDATE USER
-const updateUser = async (req, res) => {
-  const { username, email } = req.body;
-  if (!username || !email) {
-    return res.status(400).json({ ERR: "Username or email field cannot be empty" });
-  }
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id },
-    { username, email },
-    { new: true, runValidators: true }
-  );
-  const tokenUser = createTokenUser(user);
-  attachCookiesToResponse({ res, user: tokenUser });
-  res.status(200).json({ success: "User updated successfully." });
-};
-
 // DELETE USER
 const deleteUser = async (req, res) => {
   const { username } = req.body;
@@ -64,6 +48,33 @@ const deleteUser = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+// UPDATE USER
+const updateUser = async (req, res) => {
+  const { username /* , email */ } = req.body;
+  if (!username /*  || !email */) {
+    return res.status(400).json({ ERR: "Username or email field cannot be empty" });
+  }
+
+  const checkUsernameTaken = await User.findOne({ username });
+  if (checkUsernameTaken && checkUsernameTaken.username == username) {
+    return res.status(401).json({ ERR: "Username already taken" });
+  }
+
+  const user = await User.findOneAndUpdate(
+    { _id: req.user.id },
+    { username /* , email */ },
+    { new: true, runValidators: true }
+  );
+
+  // Generate a new token with updated user information
+  const tokenUser = createTokenUser(user);
+
+  // Attach the new token to the response
+  attachCookiesToResponse({ res, user: tokenUser });
+
+  res.status(200).json({ success: "User updated successfully." });
 };
 
 // UPDATE USER PASSWORD

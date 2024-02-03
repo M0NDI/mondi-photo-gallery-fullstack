@@ -1,0 +1,7 @@
+.undo-container svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+.undo-container svg:hover {
+  transform: scale(1.2);
+}

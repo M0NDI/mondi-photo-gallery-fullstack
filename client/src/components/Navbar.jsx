@@ -1,5 +1,6 @@
 import "../CSS/Navbar.css";
 import { styled } from "@mui/material/styles";
+import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Categories from "./Categories";
 import MyAccountNavIcon from "./MyAccountNavIcon.jsx";
@@ -9,6 +10,7 @@ import { Link, NavLink } from "react-router-dom";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // redux states
 import { imagesReset } from "../redux/imagesSlice.js";
@@ -21,6 +23,7 @@ import { logoutUser } from "../API/Backend/api.js";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //redux state selectors
   const images = useSelector((state) => state.images.value);
@@ -35,11 +38,20 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
   };
 
   const logout = async () => {
-    try {
-      await logoutUser();
+    const logout = await logoutUser();
+    if (logout) {
       dispatch(setLoggedInFalse());
-    } catch (error) {
-      console.log(error);
+      toast("Successfully logged out! 😊", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate("/");
     }
   };
 

@@ -1,5 +1,5 @@
 import "../CSS/Categories.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // import state reducers
@@ -29,7 +29,7 @@ const Categories = ({ handleSubmit }) => {
 
   return (
     <div className="categories-container scroll-menu t-w-full t-mt-3 t-text-center">
-      <Link onClick={(e) => categoryClickSearch("wallpapers", e)}>Wallpapers</Link>
+      <NavLink onClick={(e) => categoryClickSearch("wallpapers", e)}>Wallpapers</NavLink>
       <Link onClick={(e) => categoryClickSearch("3d renders", e)}>3D Renders</Link>
       <Link onClick={(e) => categoryClickSearch("nature", e)}>Nature</Link>
       <Link onClick={(e) => categoryClickSearch("architecture & interior", e)}>

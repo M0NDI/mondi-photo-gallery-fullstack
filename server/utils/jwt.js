@@ -12,7 +12,7 @@ const attachCookiesToResponse = ({ res, user }) => {
   const tokenValue = token;
   res.cookie("token", tokenValue, {
     httpOnly: true,
-    expiresIn: "12h",
+    expiresIn: "1d",
     signed: true,
   });
 };
