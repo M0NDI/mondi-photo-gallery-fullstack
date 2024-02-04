@@ -23,11 +23,17 @@ const Register = async (req, res) => {
       return res.status(400).json({ ERR: "Inputs cannot be empty", statusCode: 400 });
     }
 
+    if (password.length < 8) {
+      return res
+        .status(400)
+        .json({ ERR: "Password must be at least 8 characters", statusCode: 400 });
+    }
+
     // check if user exists in database
     const user = await UserSchema.findOne({ username });
 
     if (user) {
-      return res.status(409).json({ ERR: "User already exists", status: 409 });
+      return res.status(409).json({ ERR: "Username is already taken", status: 409 });
     }
 
     let userCount = await UserSchema.countDocuments({});

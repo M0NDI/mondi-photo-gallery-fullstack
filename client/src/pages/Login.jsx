@@ -41,6 +41,18 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
+      if (error.errorMessage === "User not found." || error.errorMessage === "Wrong password") {
+        toast.error("Wrong username or password", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
     }
   };
 
@@ -51,10 +63,7 @@ const Login = () => {
           LOGIN
           <div className="login-header-dot t-text-amber-500">.</div>
         </div>
-        <form
-          onSubmit={handleLogin}
-          className="login-form t-flex t-flex-col t-items-center"
-        >
+        <form onSubmit={handleLogin} className="login-form t-flex t-flex-col t-items-center">
           <input
             className="login-input login-input-username t-h-10"
             type="text"

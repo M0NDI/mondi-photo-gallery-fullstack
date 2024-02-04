@@ -27,8 +27,9 @@ const Register = () => {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const register = await registerUser(username, userPassword, userEmail);
-    if (register) {
+    try {
+      const register = await registerUser(username, userPassword, userEmail);
+      console.log(register);
       navigate("/login");
       toast("Successfully registered!", {
         position: "top-right",
@@ -40,20 +41,19 @@ const Register = () => {
         progress: undefined,
         theme: "dark",
       });
-    } else {
-      toast(
-        "Cannot register your account. Username is already taken or one of the inputs is empty.",
-        {
+    } catch (error) {
+      if (error) {
+        toast.error(error.ERR, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
-          closeOnClick: false,
+          closeOnClick: true,
           pauseOnHover: true,
-          draggable: false,
+          draggable: true,
           progress: undefined,
           theme: "dark",
-        }
-      );
+        });
+      }
     }
   };
 

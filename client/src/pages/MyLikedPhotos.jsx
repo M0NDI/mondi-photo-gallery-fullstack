@@ -11,7 +11,7 @@ import RemoveImageHoverOption from "../components/RemoveImageHoverOption";
 import { setImageLikedTrue, setImageLikedFalse } from "../redux/isImageLikedSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import "../CSS/MyLikedPhotos.css";
+import "../CSS/MyLikedPhotos.css";
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ const MyAccount = () => {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageToRecover, setImageToRecover] = useState(null);
   const [recentlyUnliked, setRecentlyUnliked] = useState(false);
-  const [recentlyUnlikedIndex, setRecentlyUnlikedIndex] = useState(null);
   const isImageLiked = useSelector((state) => state.isImageLiked.value);
 
   const handleMouseEnter = async (image) => {
