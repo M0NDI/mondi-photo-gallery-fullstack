@@ -11,7 +11,7 @@ import RemoveImageHoverOption from "../components/RemoveImageHoverOption";
 import { setImageLikedTrue, setImageLikedFalse } from "../redux/isImageLikedSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "../css/MyLikedPhotos.css";
+// import "../CSS/MyLikedPhotos.css";
 
 const MyAccount = () => {
   const dispatch = useDispatch();
