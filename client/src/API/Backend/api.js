@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const authUrl = "https://mondi-gallery.onrender.com/api/v1/auth";
-const usersUrl = "https://mondi-gallery.onrender.com/api/v1/users";
-const imagesUrl = "https://mondi-gallery.onrender.com/api/v1/images";
+const authUrl = "https://mondi-gallery-api.onrender.com/api/v1/auth";
+const usersUrl = "https://mondi-gallery-api.onrender.com/api/v1/users";
+const imagesUrl = "https://mondi-gallery-api.onrender.com/api/v1/images";
 
 const registerUser = async (username, password, email) => {
   try {
