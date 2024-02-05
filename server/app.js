@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 // start
-// const port = 3000;
+const port = 3000;
 const start = () => {
   try {
     connectDB(process.env.MONGO_URI);
@@ -46,7 +46,7 @@ const start = () => {
   } catch (error) {
     console.log(error);
   }
-  app.listen("0.0.0.0", console.log(`Server listening on port ${port}`));
+  app.listen(port, "0.0.0.0", console.log(`Server listening on port ${port}`));
 };
 
 start();
