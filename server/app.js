@@ -46,7 +46,10 @@ const start = () => {
   } catch (error) {
     console.log(error);
   }
-  app.listen(port, "0.0.0.0", console.log(`Server listening on port ${port}`));
+  app.listen(port, "0.0.0.0", (err) => {
+    if (err) throw err;
+    console.log(`Listening on port ${port}`);
+  });
 };
 
 start();
