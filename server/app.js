@@ -13,9 +13,6 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./db/connect");
 
 // middleware
-app.use(express.json());
-app.use("/", logger);
-
 const allowedOrigins = ["https://mondi-photo-gallery.onrender.com"];
 
 app.use(
@@ -24,6 +21,8 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json());
+app.use("/", logger);
 
 app.use(morgan("common"));
 app.use(cookieParser(process.env.JWT_SECRET)); // cookies now in req.signedCookies
