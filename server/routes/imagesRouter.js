@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { authenticateUser } = require("../utils/authenticate");
-const { authorizeUserPermissions } = require("../utils/authenticate");
+// const { authorizeUserPermissions } = require("../utils/authenticate");
 
 const {
   showCurrentUserLikedImages,

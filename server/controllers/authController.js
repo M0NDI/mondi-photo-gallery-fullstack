@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { createJwt, isTokenValid, attachCookiesToResponse } = require("../utils/jwt");
 const createTokenUser = require("../utils/createTokenUser");
 require("dotenv").config();
+const validator = require("validator");
 
 const Register = async (req, res) => {
   const saltRounds = 10;
@@ -27,6 +28,20 @@ const Register = async (req, res) => {
       return res
         .status(400)
         .json({ ERR: "Password must be at least 8 characters", statusCode: 400 });
+    }
+
+    if (!validator.isAlphanumeric(username)) {
+      return res.status(400).json({ ERR: "Name cannot contain only numbers" });
+    }
+
+    // Check if the username contains at least one letter
+    if (!username.match(/[a-zA-Z]/)) {
+      return res.status(400).json({ ERR: "Name must contain at least one letter" });
+    }
+
+    if (!validator.isEmail(email)) {
+      // If email is not in a valid format, return a 400 Bad Request response
+      return res.status(400).json({ ERR: "Email format is not valid" });
     }
 
     // check if user exists in database
