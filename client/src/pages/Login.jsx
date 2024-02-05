@@ -66,16 +66,18 @@ const Login = () => {
         <form onSubmit={handleLogin} className="login-form t-flex t-flex-col t-items-center">
           <input
             className="login-input login-input-username t-h-10"
+            id="login-username-field"
             type="text"
+            autoComplete="on"
             placeholder="username"
-            id="registration-username-field"
             onChange={handleUsernameInputChange}
           />
           <input
             className="login-input login-input-password t-h-10"
+            id="login-password-field"
             type="password"
+            autoComplete="on"
             placeholder="password"
-            id="registration-password-field"
             onChange={handlePasswordInputChange}
           />
           <input

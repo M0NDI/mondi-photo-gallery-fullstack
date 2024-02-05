@@ -101,7 +101,7 @@ const RandomPhotos = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
     } else {
       toast("Cannot perform action because you are not logged in!", {
@@ -112,7 +112,7 @@ const RandomPhotos = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
     }
   };
@@ -135,7 +135,7 @@ const RandomPhotos = () => {
   useEffect(() => {
     const handleScroll = lodash.debounce(() => {
       const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (window.scrollY / pageHeight >= 0.6) {
+      if (window.scrollY / pageHeight >= 0.5) {
         randomPhotos();
       }
     }, 40);

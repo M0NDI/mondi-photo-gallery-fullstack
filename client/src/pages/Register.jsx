@@ -29,7 +29,6 @@ const Register = () => {
     event.preventDefault();
     try {
       const register = await registerUser(username, userPassword, userEmail);
-      console.log(register);
       navigate("/login");
       toast("Successfully registered!", {
         position: "top-right",
@@ -79,9 +78,12 @@ const Register = () => {
             id="registration-password-field"
             onChange={handlePasswordInputChange}
           />
+          <div className="t-text-zinc-50 t-opacity-50">
+            Password must be a minimum of 8 characters
+          </div>
           <input
             className="register-input register-input-email t-h-10"
-            type="text"
+            type="email"
             placeholder="email"
             id="registration-email-field"
             onChange={handleEmailInputChange}
@@ -91,9 +93,9 @@ const Register = () => {
             type="submit"
             placeholder="submit"
           />
-          <div className="t-text-white t-mt-4 t-text-xs">
+          <div className="t-text-white t-mt-4 t-text-base">
             ALREADY HAVE AN ACCOUNT?
-            <Link to={"/login"} className="t-text-amber-500 t-ml-2 t-text-base">
+            <Link to={"/login"} className="t-text-amber-500 t-ml-2">
               Login here!
             </Link>
           </div>

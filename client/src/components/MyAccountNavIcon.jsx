@@ -30,11 +30,8 @@ const MyAccount = () => {
     const getCurrentUser = async () => {
       const user = await showCurrentUser();
       if (user) {
-        console.log("HERE'S USER", user);
         setCurrentUser(user);
       }
-
-      console.log(currentUser);
     };
     getCurrentUser();
   }, []);

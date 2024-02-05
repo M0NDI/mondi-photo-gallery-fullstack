@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const authUrl = "http://localhost:3000/api/v1/auth";
-const usersUrl = "http://localhost:3000/api/v1/users";
-const imagesUrl = "http://localhost:3000/api/v1/images";
+const authUrl = "https://mondi-gallery.onrender.com/api/v1/auth";
+const usersUrl = "https://mondi-gallery.onrender.com/api/v1/users";
+const imagesUrl = "https://mondi-gallery.onrender.com/api/v1/images";
 
 const registerUser = async (username, password, email) => {
   try {
@@ -11,7 +11,6 @@ const registerUser = async (username, password, email) => {
       password: password,
       email: email,
     });
-    console.log(user.data);
     return user.data;
   } catch (error) {
     throw error.response.data;

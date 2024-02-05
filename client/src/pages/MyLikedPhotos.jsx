@@ -63,7 +63,9 @@ const MyAccount = () => {
     try {
       const images = await showCurrentUserLikedImages();
       if (images) {
-        setLikedImages(images.data.likedImages);
+        setLikedImages((prevImages) => {
+          return images.data.likedImages;
+        });
       }
     } catch (error) {
       console.error("Error fetching user liked images:", error);
@@ -160,7 +162,7 @@ const MyAccount = () => {
       {recentlyUnliked ? (
         <div
           onClick={undoRemoveFromLiked}
-          className="undo-container t-w-12 t-text-center t-text-xl t-fixed t-bottom-20 t-left-20 t-cursor-pointer"
+          className="undo-container t-w-11 t-text-center t-text-xl t-fixed t-bottom-20 t-left-12 t-cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
