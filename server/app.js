@@ -16,8 +16,14 @@ const connectDB = require("./db/connect");
 app.use(express.json());
 app.use("/", logger);
 
-const allowedOrigins = [/* "http://localhost:5173",  */ "https://mondi-photo-gallery.onrender.com"];
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+const allowedOrigins = ["https://mondi-photo-gallery.onrender.com"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 app.use(morgan("common"));
 app.use(cookieParser(process.env.JWT_SECRET)); // cookies now in req.signedCookies
