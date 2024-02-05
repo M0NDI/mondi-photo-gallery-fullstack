@@ -16,7 +16,7 @@ const connectDB = require("./db/connect");
 app.use(express.json());
 app.use("/", logger);
 
-const allowedOrigins = [/* "http://localhost:5173",  */"https://mondi-photo-gallery.onrender.com"];
+const allowedOrigins = [/* "http://localhost:5173",  */ "https://mondi-photo-gallery.onrender.com"];
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 app.use(morgan("common"));
@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 // start
-const port = 3000;
+// const port = 3000;
 const start = () => {
   try {
     connectDB(process.env.MONGO_URI);
@@ -46,7 +46,7 @@ const start = () => {
   } catch (error) {
     console.log(error);
   }
-  app.listen(port, console.log(`Server listening on port ${port}`));
+  app.listen("0.0.0.0", console.log(`Server listening on port ${port}`));
 };
 
 start();
