@@ -49,10 +49,10 @@ function App() {
     }
   };
 
-  // to be called on page refresh to clear expired cookies
+  /* // to be called on page refresh to clear expired cookies
   const clearCookie = async () => {
     await logoutUser();
-  };
+  }; */
 
   // handle user search input
   const handleInputChange = (e) => {

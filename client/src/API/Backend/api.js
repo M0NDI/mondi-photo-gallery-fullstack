@@ -19,6 +19,7 @@ const registerUser = async (username, password, email) => {
       password: password,
       email: email,
     });
+    console.log(user.data);
     return user.data;
   } catch (error) {
     throw error.response.data;
