@@ -77,7 +77,7 @@ function App() {
       const currentUser = await showCurrentUser();
       if (!currentUser) {
         dispatch(setLoggedInFalse());
-        await clearCookie(); // clear expired cookies in browser if user no longer logged in
+        // await clearCookie(); // clear expired cookies in browser if user no longer logged in
       }
     };
     fetchCurrentUser();
