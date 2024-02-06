@@ -1,5 +1,13 @@
 import axios from "axios";
 
+//Development urls
+
+/* const authUrl = "http://localhost:3000/api/v1/auth";
+const usersUrl = "http://localhost:3000/api/v1/users";
+const imagesUrl = "http://localhost:3000/api/v1/images";
+ */
+
+// production urls
 const authUrl = "https://mondi-photo-gallery-api.onrender.com/api/v1/auth";
 const usersUrl = "https://mondi-photo-gallery-api.onrender.com/api/v1/users";
 const imagesUrl = "https://mondi-photo-gallery-api.onrender.com/api/v1/images";
