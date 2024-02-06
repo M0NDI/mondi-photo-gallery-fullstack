@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./db/connect");
 
 // middleware
-const allowedOrigins = ["https://mondi-photo-gallery.onrender.com"];
+const allowedOrigins = ["http://localhost:5173", "https://mondi-photo-gallery.onrender.com"];
 
 app.use(
   cors({
