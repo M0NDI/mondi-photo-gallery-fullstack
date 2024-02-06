@@ -14,6 +14,7 @@ const attachCookiesToResponse = ({ res, user }) => {
     httpOnly: true,
     expiresIn: process.env.JWT_EXPIRATION,
     signed: true,
+    secure: true,
   });
 };
 
