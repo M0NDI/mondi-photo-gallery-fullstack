@@ -15,6 +15,7 @@ const attachCookiesToResponse = ({ res, user }) => {
     expiresIn: process.env.JWT_EXPIRATION,
     signed: true,
     secure: process.env.ENVIRONMENT === "production", // Set secure flag only in production
+    domain: ".onrender.com",
   });
 };
 
