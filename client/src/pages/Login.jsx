@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoggedInTrue } from "../redux/isUserLoggedInSlice";
 import { toast } from "react-toastify";
 import "../CSS/Login.css";
+import { stubTrue } from "lodash";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login = () => {
     try {
       event.preventDefault();
       const login = await loginUser(loginForm.username, loginForm.password);
-      if (login.success) {
+      if (login.success === true) {
         dispatch(setLoggedInTrue());
         navigate("/");
         toast("Successfully logged in! 😊", {
@@ -39,6 +40,8 @@ const Login = () => {
           progress: undefined,
           theme: "dark",
         });
+      } else {
+        console.log("FAILED TO LOG IN")
       }
     } catch (error) {
       console.log(error);

@@ -7,9 +7,6 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { store, persistor } from "./store.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { disableReactDevTools } from "@fvilers/disable-react-devtools";
-
-if (import.meta.env.environment === "production") disableReactDevTools();
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
