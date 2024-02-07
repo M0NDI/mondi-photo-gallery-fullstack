@@ -75,10 +75,10 @@ function App() {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const currentUser = await showCurrentUser();
-      /* if (!currentUser) {
+      if (!currentUser) {
         dispatch(setLoggedInFalse());
         await clearCookie(); // clear expired cookies in browser if user no longer logged in
-      } */
+      }
     };
     fetchCurrentUser();
   }, [location.pathname]);
