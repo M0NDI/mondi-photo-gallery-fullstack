@@ -13,6 +13,9 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./db/connect");
 
 // middleware
+// Serve static files from the build folder
+app.use(express.static(path.join(__dirname, "build")));
+
 const allowedOrigins = ["http://localhost:5173", "https://mondi-photo-gallery.onrender.com"];
 
 app.use(
@@ -36,6 +39,10 @@ const imagesRouter = require("./routes/imagesRouter");
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/images", imagesRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.get("/", (req, res) => {
   console.log(req.signedCookies);

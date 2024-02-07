@@ -1,5 +1,6 @@
 {
   "name": "front-end",
+  "homepage": "https://mondi-photo-gallery.onrender.com",
   "private": true,
   "version": "0.0.0",
   "type": "module",
