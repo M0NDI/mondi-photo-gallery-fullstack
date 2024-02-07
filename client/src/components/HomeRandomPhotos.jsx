@@ -48,7 +48,6 @@ const RandomPhotos = () => {
 
   const handleMouseEnter = async (event) => {
     const image = event;
-    console.log(image);
     setHoveredImage((prevImage) => {
       return image; // Set hoveredImage to the most recent image
     });
