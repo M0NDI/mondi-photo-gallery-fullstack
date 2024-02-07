@@ -26,7 +26,6 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
   const navigate = useNavigate();
 
   //redux state selectors
-  const images = useSelector((state) => state.images.value);
   const userSearchTerm = useSelector((state) => state.userSearchTerm.value);
   const currentPage = useSelector((state) => state.currentPage.value);
   const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);

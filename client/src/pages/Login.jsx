@@ -10,21 +10,22 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [loginForm, setLoginForm] = useState({
+    username: "",
+    password: "",
+  });
 
-  const handleUsernameInputChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordInputChange = (event) => {
-    setUserPassword(event.target.value);
+  const handleInputChange = (event) => {
+    setLoginForm({
+      ...loginForm,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleLogin = async (event) => {
     try {
       event.preventDefault();
-      const login = await loginUser(username, userPassword);
+      const login = await loginUser(loginForm.username, loginForm.password);
       if (login.success) {
         dispatch(setLoggedInTrue());
         navigate("/");
@@ -68,17 +69,19 @@ const Login = () => {
             className="login-input login-input-username t-h-10"
             id="login-username-field"
             type="text"
+            name="username"
             autoComplete="on"
             placeholder="username"
-            onChange={handleUsernameInputChange}
+            onChange={handleInputChange}
           />
           <input
             className="login-input login-input-password t-h-10"
             id="login-password-field"
             type="password"
+            name="password"
             autoComplete="on"
             placeholder="password"
-            onChange={handlePasswordInputChange}
+            onChange={handleInputChange}
           />
           <input
             className="login-input login-input-submit t-h-8 t-bg-amber-500"

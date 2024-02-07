@@ -8,38 +8,40 @@ import { toast } from "react-toastify";
 const Register = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [registerForm, setRegisterForm] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
 
-  const handleUsernameInputChange = (event) => {
-    setUsername(event.target.value);
-    console.log(event.target.value);
-  };
-
-  const handlePasswordInputChange = (event) => {
-    setUserPassword(event.target.value);
-  };
-
-  const handleEmailInputChange = (event) => {
-    setUserEmail(event.target.value);
+  const handleInputChange = (event) => {
+    setRegisterForm({
+      ...registerForm,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
-      const register = await registerUser(username, userPassword, userEmail);
-      navigate("/login");
-      toast("Successfully registered!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "dark",
-      });
+      const register = await registerUser(
+        registerForm.username,
+        registerForm.password,
+        registerForm.email
+      );
+      if (register) {
+        navigate("/login");
+        toast("Successfully registered!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
     } catch (error) {
       if (error) {
         toast.error(error.ERR, {
@@ -67,16 +69,18 @@ const Register = () => {
           <input
             className="register-input register-input-username t-h-10"
             type="text"
+            name="username"
             placeholder="username"
             id="registration-username-field"
-            onChange={handleUsernameInputChange}
+            onChange={handleInputChange}
           />
           <input
             className="register-input register-input-password t-h-10"
             type="password"
+            name="password"
             placeholder="password"
             id="registration-password-field"
-            onChange={handlePasswordInputChange}
+            onChange={handleInputChange}
           />
           <div className="t-text-zinc-50 t-opacity-50">
             Password must be a minimum of 8 characters
@@ -84,9 +88,10 @@ const Register = () => {
           <input
             className="register-input register-input-email t-h-10"
             type="email"
+            name="email"
             placeholder="email"
             id="registration-email-field"
-            onChange={handleEmailInputChange}
+            onChange={handleInputChange}
           />
           <input
             className="register-input register-input-submit t-h-8 t-bg-amber-500"
