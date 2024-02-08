@@ -14,10 +14,8 @@ const attachCookiesToResponse = ({ res, user }) => {
     httpOnly: true,
     expiresIn: process.env.JWT_EXPIRATION,
     signed: true,
-    secure: false, // Set secure flag only in production
-    cookie: {
-      sameSite: "strict",
-    },
+    secure: process.env.NODE_ENV === "production", // Set secure flag only in production
+    sameSite: "none",
   });
 };
 
