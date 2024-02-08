@@ -143,7 +143,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/my-liked-photos" element={<MyLikedPhotos />} />
-        <Route path="/account-settings" element={<UserAccountSettings />} />
+        {/* <Route path="/account-settings" element={<UserAccountSettings />} /> */}
         <Route path="/photo/:id" element={<PhotoPage />} />
         <Route path="/c/:searchTerm" element={<Images />} />
       </Routes>
