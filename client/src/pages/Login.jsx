@@ -27,6 +27,7 @@ const Login = () => {
     try {
       event.preventDefault();
       const login = await loginUser(loginForm.username, loginForm.password);
+      console.log(login);
       if (login.success === true) {
         dispatch(setLoggedInTrue());
         navigate("/");
@@ -40,12 +41,10 @@ const Login = () => {
           progress: undefined,
           theme: "dark",
         });
-      } else {
-        console.log("FAILED TO LOG IN")
       }
     } catch (error) {
       console.log(error);
-      if (error.errorMessage === "User not found." || error.errorMessage === "Wrong password") {
+      if (error.status !== 200) {
         toast.error("Wrong username or password", {
           position: "top-right",
           autoClose: 3000,

@@ -45,7 +45,7 @@ const Register = async (req, res) => {
     }
 
     // check if user exists in database
-    const user = await UserSchema.findOne({ username });
+    const user = await UserSchema.findOne({ username: username });
 
     if (user) {
       return res.status(409).json({ ERR: "Username is already taken", status: 409 });
@@ -88,7 +88,7 @@ const Login = async (req, res) => {
       return res.json({ ERROR: "Please provide email and password" });
     }
 
-    const user = await UserSchema.findOne({ username: username.toLowerCase() });
+    const user = await UserSchema.findOne({ username });
     if (!user) {
       return res.status(404).json({
         status: 404,
