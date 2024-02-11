@@ -77,32 +77,25 @@ const Register = async (req, res) => {
       user: tokenUser,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 const Login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    // validate user input
     if (!username || !password) {
-      return res.json({ ERROR: "Please provide email and password" });
+      return res.status(400).json({ ERR: "Inputs cannot be empty", statusCode: 400 });
     }
 
     const user = await UserSchema.findOne({ username });
-    if (!user) {
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!user || !isPasswordMatch) {
       return res.status(404).json({
         status: 404,
         success: false,
-        errorMessage: "User not found.",
-      });
-    }
-
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
-      return res.status(400).json({
-        status: 400,
-        success: false,
-        errorMessage: "Wrong password",
+        ERR: "Wrong username or password",
       });
     }
 
@@ -110,7 +103,7 @@ const Login = async (req, res) => {
     attachCookiesToResponse({ res, user: tokenUser });
     res.status(200).json({ success: "User logged in", user: user.username, success: true });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

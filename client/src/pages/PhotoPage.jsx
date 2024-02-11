@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { imageReset, addItem } from "../redux/singleImageSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAs } from "file-saver";
+import { addImageToLiked } from "../API/Backend/api";
 import "../CSS/PhotoPage.css";
 
 const PhotoPage = () => {
@@ -20,7 +21,6 @@ const PhotoPage = () => {
       const image = await getSingleImage(id);
       if (image) {
         dispatch(addItem(image));
-        console.log(singleImage);
       }
       return image;
     } catch (error) {
@@ -38,6 +38,10 @@ const PhotoPage = () => {
   const handleImageDownload = (imagePath, imageSlug) => {
     let url = imagePath;
     saveAs(url, imageSlug);
+  };
+
+  const handleLikeImage = async (imageToLike) => {
+    const image = await addImageToLiked(imageToLike); /* HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE  */
   };
 
   useEffect(() => {
@@ -63,6 +67,25 @@ const PhotoPage = () => {
               </Link>
             </div>
             <div className="t-flex t-items-center">
+              <div className="t-text-xl t-mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  id="heart-icon"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="hover-icon-heart t-w-6 t-h-6 t-cursor-pointer"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                    fill="white"
+                    stroke="black"
+                  />
+                </svg>
+              </div>
               <div
                 className="dropdown-main dropdown-toggle t-mr-12 t-flex t-items-center t-h-4"
                 role="button"
