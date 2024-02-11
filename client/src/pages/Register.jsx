@@ -69,7 +69,7 @@ const Register = () => {
   return (
     <div className="register-main-container t-flex t-flex-col t-items-center t-justify-center t-h-full t-w-full t-bg-zinc-200 t-mt-10">
       {formSubmissionInProgress ? (
-        <div className="t-flex t-justify-center t-items-center t-relative t-top-0">
+        <div className="t-mb-8 t-z-10">
           <RequestSpeedAlert />
         </div>
       ) : (
