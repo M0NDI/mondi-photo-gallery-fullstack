@@ -52,7 +52,7 @@ const RandomPhotos = () => {
       return image; // Set hoveredImage to the most recent image
     });
     const userLikedImages = await showCurrentUserLikedImages();
-    if (userLikedImages) {
+    if (userLikedImages && isUserLoggedIn) {
       const isImageLiked = userLikedImages.data.likedImages.find((photo) => photo.id === image.id);
       if (isImageLiked) {
         dispatch(setImageLikedTrue());
