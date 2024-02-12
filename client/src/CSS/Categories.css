@@ -1,6 +1,10 @@
+.categories-container {
+  border-bottom: 1px solid #0c152a;
+}
+
 div.scroll-menu {
   background-color: white;
-  overflow:auto;
+  overflow: auto;
   white-space: nowrap;
 }
 

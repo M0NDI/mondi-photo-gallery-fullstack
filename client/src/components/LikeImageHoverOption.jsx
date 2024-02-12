@@ -7,7 +7,7 @@ const LikeImageHoverOption = () => {
 
   return (
     <div className="image-hover-options t-absolute t-z-20">
-      <div className={`hover-icon-heart t-cursor-pointer`}>
+      <div className="hover-icon-heart t-cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           id="heart-icon"

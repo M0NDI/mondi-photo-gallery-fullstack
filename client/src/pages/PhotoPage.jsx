@@ -102,17 +102,19 @@ const PhotoPage = () => {
   };
 
   const handleRemoveFromLiked = async () => {
-    await removeImageFromLiked(currentPageImage);
-    toast("Image unliked!", {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    const image = await removeImageFromLiked(currentPageImage);
+    if (image) {
+      toast("Image unliked!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
     dispatch(setImageLikedFalse());
   };
 
@@ -172,7 +174,7 @@ const PhotoPage = () => {
                     viewBox="0 0 24 24"
                     width="24"
                     height="24"
-                    className="hover-icon-cross t-w-6 t-h-6 t-cursor-pointer"
+                    className="hover-icon-heart t-w-6 t-h-6 t-cursor-pointer"
                     onClick={() => {
                       handleRemoveFromLiked();
                     }}
@@ -227,7 +229,7 @@ const PhotoPage = () => {
             <img
               src={singleImage[0].urls.regular}
               alt={singleImage.alt_description}
-              className="t-w-full t-mt-2"
+              className="t-w-2/3 t-mt-2"
             />
           </div>
           <div className="t-flex t-justify-start t-flex-col t-m-auto t-w-full t-p-2">

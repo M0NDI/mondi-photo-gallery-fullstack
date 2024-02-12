@@ -14,7 +14,11 @@
   padding: 5px;
 }
 
-/* .hover-icon-heart {
+.dropdown-menu {
+  margin-top: 1rem !important;
+}
+
+.hover-icon-heart {
   width: 2.5rem;
   -webkit-transition: transform 0.2s ease-in-out;
   -moz-transition: transform 0.2s ease-in-out;
@@ -28,7 +32,7 @@
   -moz-transition: transform 0.2s ease-in-out;
   -ms-transition: transform 0.2s ease-in-out;
   transition: transform 0.2s ease-in-out;
-} */
+}
 
 @media (max-width: 940px) {
   .photo-main img {
