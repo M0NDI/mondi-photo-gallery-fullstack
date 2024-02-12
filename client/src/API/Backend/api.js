@@ -17,7 +17,6 @@ const registerUser = async (username, password, email) => {
       password: password,
       email: email,
     });
-    console.log(user.data);
     return user.data;
   } catch (error) {
     throw error.response.data;
@@ -34,7 +33,6 @@ const loginUser = async (username, password) => {
       },
       { withCredentials: true }
     );
-    console.log(user);
     return user.data;
   } catch (error) {
     console.log(error.response.data);

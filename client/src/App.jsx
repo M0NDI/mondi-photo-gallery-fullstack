@@ -17,8 +17,8 @@ import PhotoPage from "./pages/PhotoPage.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import MyLikedPhotos from "./pages/MyLikedPhotos.jsx";
-import UserAccountSettings from "./pages/UserAccountSettings.jsx";
-
+/* import UserAccountSettings from "./pages/UserAccountSettings.jsx";
+ */
 // import state reducers
 import { imagesReset, addItems } from "./redux/imagesSlice";
 import { increment } from "./redux/currentPageSlice.js";

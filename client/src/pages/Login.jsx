@@ -31,7 +31,6 @@ const Login = () => {
       event.preventDefault();
       setFormSubmissionInProgress(true);
       const login = await loginUser(loginForm.username, loginForm.password);
-      console.log(login);
       if (login.success === true) {
         dispatch(setLoggedInTrue());
         navigate("/");

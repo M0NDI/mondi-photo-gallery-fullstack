@@ -223,7 +223,8 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
             </form>
           </div>
         </div>
-        <Categories handleSubmit={handleSubmit} />
+
+        {!location.pathname.startsWith("/photo/") && <Categories handleSubmit={handleSubmit} />}
       </nav>
     </>
   );

@@ -1,7 +1,6 @@
 .navbar {
   position: fixed !important;
   top: 0;
-  border-bottom: 1px solid #0c152a;
   padding-top: 10px !important;
   padding-bottom: 0 !important;
 }

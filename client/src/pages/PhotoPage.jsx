@@ -2,7 +2,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Link, useParams } from "react-router-dom";
 import { getSingleImage } from "../API/Remote/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { imageReset, addItem } from "../redux/singleImageSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAs } from "file-saver";
@@ -15,10 +15,12 @@ const PhotoPage = () => {
   const dispatch = useDispatch();
 
   const singleImage = useSelector((state) => state.singleImage.value);
+  const [imageToLike, setImageToLike] = useState({});
 
   const fetchSingleImage = async () => {
     try {
       const image = await getSingleImage(id);
+      setImageToLike(image);
       if (image) {
         dispatch(addItem(image));
       }
@@ -41,7 +43,7 @@ const PhotoPage = () => {
   };
 
   const handleLikeImage = async (imageToLike) => {
-    const image = await addImageToLiked(imageToLike); /* HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE  */
+    const image = await addImageToLiked(imageToLike);
   };
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const PhotoPage = () => {
   }, [id]);
 
   return (
-    <div className="t-h-full t-w-full t-mt-40">
+    <div className="t-h-full t-w-full t-mt-20">
       {singleImage.length > 0 && singleImage[0].urls ? (
         <div className="t-flex t-flex-col t-items-center t-w-full">
           <div className="t-w-full t-flex t-justify-between">
@@ -76,6 +78,9 @@ const PhotoPage = () => {
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="hover-icon-heart t-w-6 t-h-6 t-cursor-pointer"
+                  onClick={() => {
+                    handleLikeImage(imageToLike);
+                  }}
                 >
                   <path
                     strokeLinecap="round"
