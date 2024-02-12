@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { registerUser } from "../API/Backend/api";
 import "../CSS/Register.css";
-// import cameraPhoto from "../assets/images/camera-leaves.jpg";
 import { Link, useNavigate } from "react-router-dom";
+
+// toastify toast
 import { toast } from "react-toastify";
+
+// comopnents
 import RequestSpeedAlert from "../components/RequestSpeedAlert";
 
+// material ui components
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 

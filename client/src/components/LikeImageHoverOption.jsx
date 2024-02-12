@@ -1,7 +1,7 @@
 import "../CSS/ImageHoverOptions.css";
 import { useSelector } from "react-redux";
 
-const ImageHoverOptions = () => {
+const LikeImageHoverOption = () => {
   // redux states
   const isImageLiked = useSelector((state) => state.isImageLiked.value);
 
@@ -29,4 +29,4 @@ const ImageHoverOptions = () => {
   );
 };
 
-export default ImageHoverOptions;
+export default LikeImageHoverOption;

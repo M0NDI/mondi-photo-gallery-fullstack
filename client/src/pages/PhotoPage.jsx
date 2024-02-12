@@ -1,26 +1,57 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { saveAs } from "file-saver";
+import { toast } from "react-toastify";
+import "../CSS/PhotoPage.css";
+
+// material UI components
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { Link, useParams } from "react-router-dom";
-import { getSingleImage } from "../API/Remote/api";
-import { useEffect, useState } from "react";
-import { imageReset, addItem } from "../redux/singleImageSlice";
+
+// redux
 import { useSelector, useDispatch } from "react-redux";
-import { saveAs } from "file-saver";
-import { addImageToLiked } from "../API/Backend/api";
-import "../CSS/PhotoPage.css";
+
+// redux state actions
+import { imageReset, addItem } from "../redux/singleImageSlice";
+import { setImageLikedTrue, setImageLikedFalse } from "../redux/isImageLikedSlice";
+
+// Remote API
+import { getSingleImage } from "../API/Remote/api";
+
+// Backend API
+import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
+import { showCurrentUserLikedImages } from "../API/Backend/api";
 
 const PhotoPage = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
+  // redux state
   const singleImage = useSelector((state) => state.singleImage.value);
-  const [imageToLike, setImageToLike] = useState({});
+  const isImageLiked = useSelector((state) => state.isImageLiked.value);
+
+  // react state
+  const [currentPageImage, setCurrentPageImage] = useState({});
+
+  const checkIfImageIsLiked = async (currentPageImage) => {
+    const fetchLikedImages = await showCurrentUserLikedImages(currentPageImage);
+    if (fetchLikedImages) {
+      const imageLiked = fetchLikedImages.data.likedImages.find(
+        (photo) => photo.id === currentPageImage.id
+      );
+      if (imageLiked) {
+        dispatch(setImageLikedTrue());
+      } else {
+        dispatch(setImageLikedFalse());
+      }
+    }
+  };
 
   const fetchSingleImage = async () => {
     try {
       const image = await getSingleImage(id);
-      setImageToLike(image);
+      setCurrentPageImage(image);
       if (image) {
         dispatch(addItem(image));
       }
@@ -44,12 +75,56 @@ const PhotoPage = () => {
 
   const handleLikeImage = async (imageToLike) => {
     const image = await addImageToLiked(imageToLike);
+    if (image) {
+      dispatch(setImageLikedTrue());
+      toast("Image liked!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast("Unexpected error. Couldn't like image.", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
+  const handleRemoveFromLiked = async () => {
+    await removeImageFromLiked(currentPageImage);
+    toast("Image unliked!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    dispatch(setImageLikedFalse());
   };
 
   useEffect(() => {
     fetchSingleImage();
     dispatch(imageReset());
   }, [id]);
+
+  useEffect(() => {
+    checkIfImageIsLiked(currentPageImage);
+    console.log(isImageLiked);
+  }, [isImageLiked]);
 
   return (
     <div className="t-h-full t-w-full t-mt-20">
@@ -70,26 +145,41 @@ const PhotoPage = () => {
             </div>
             <div className="t-flex t-items-center">
               <div className="t-text-xl t-mr-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  id="heart-icon"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="hover-icon-heart t-w-6 t-h-6 t-cursor-pointer"
-                  onClick={() => {
-                    handleLikeImage(imageToLike);
-                  }}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                    fill="white"
-                    stroke="black"
-                  />
-                </svg>
+                {!isImageLiked ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id="heart-icon"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="hover-icon-heart t-w-6 t-h-6 t-cursor-pointer"
+                    onClick={() => {
+                      handleLikeImage(currentPageImage);
+                    }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                      fill="white"
+                      stroke="black"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    className="hover-icon-cross t-w-6 t-h-6 t-cursor-pointer"
+                    onClick={() => {
+                      handleRemoveFromLiked();
+                    }}
+                  >
+                    <path d="M5.72 5.72a.75.75 0 0 1 1.06 0L12 10.94l5.22-5.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L13.06 12l5.22 5.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L12 13.06l-5.22 5.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L10.94 12 5.72 6.78a.75.75 0 0 1 0-1.06Z"></path>
+                  </svg>
+                )}
               </div>
               <div
                 className="dropdown-main dropdown-toggle t-mr-12 t-flex t-items-center t-h-4"

@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "../CSS/MyLikedPhotos.css";
+
+// material UI components
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+
+// Backend API
 import {
   addImageToLiked,
   removeImageFromLiked,
   showCurrentUserLikedImages,
 } from "../API/Backend/api";
-import { useDispatch, useSelector } from "react-redux";
+
+// Components
 import RemoveImageHoverOption from "../components/RemoveImageHoverOption";
-import { setImageLikedTrue, setImageLikedFalse } from "../redux/isImageLikedSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "../CSS/MyLikedPhotos.css";
+
+// redux
+import { useDispatch, useSelector } from "react-redux";
+
+// Redux state actions
+import { setImageLikedTrue } from "../redux/isImageLikedSlice";
 
 const MyAccount = () => {
   const dispatch = useDispatch();

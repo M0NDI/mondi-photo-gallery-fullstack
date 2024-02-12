@@ -2,14 +2,17 @@ import "./App.css";
 import "react-router-dom";
 import _ from "lodash";
 import { Routes, Route } from "react-router-dom";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+// Remote API
 import { getImages } from "./API/Remote/api.js";
+
+// Backend API
 import { logoutUser, showCurrentUser } from "./API/Backend/api.js";
 
+// Components and pages
 import Images from "./components/Images.jsx";
 import Navbar from "./components/Navbar";
 import HomeRandomPhotos from "./components/HomeRandomPhotos.jsx";
@@ -17,9 +20,8 @@ import PhotoPage from "./pages/PhotoPage.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import MyLikedPhotos from "./pages/MyLikedPhotos.jsx";
-/* import UserAccountSettings from "./pages/UserAccountSettings.jsx";
- */
-// import state reducers
+
+// import state actions
 import { imagesReset, addItems } from "./redux/imagesSlice";
 import { increment } from "./redux/currentPageSlice.js";
 import { updateSearchTerm } from "./redux/userSearchTermSlice";
@@ -143,7 +145,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/my-liked-photos" element={<MyLikedPhotos />} />
-        {/* <Route path="/account-settings" element={<UserAccountSettings />} /> */}
         <Route path="/photo/:id" element={<PhotoPage />} />
         <Route path="/c/:searchTerm" element={<Images />} />
       </Routes>

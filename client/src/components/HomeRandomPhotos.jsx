@@ -1,19 +1,32 @@
 import "../CSS/Images.css";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import LikeImageHoverOption from "./LikeImageHoverOption";
-import RemoveImageHoverOption from "./RemoveImageHoverOption";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { getRandomPhotos } from "../API/Remote/api";
 import lodash from "lodash";
-import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
-import { showCurrentUserLikedImages } from "../API/Backend/api";
-import { setImageLikedFalse, setImageLikedTrue } from "../redux/isImageLikedSlice";
+
+// React
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { toast } from "react-toastify";
 
-// import redux state
+// Material UI components
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
+// Components
+import LikeImageHoverOption from "./LikeImageHoverOption";
+import RemoveImageHoverOption from "./RemoveImageHoverOption";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+
+// Remote API
+import { getRandomPhotos } from "../API/Remote/api";
+
+// Backend API
+import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
+import { showCurrentUserLikedImages } from "../API/Backend/api";
+
+// Redux state actions
+import { setImageLikedFalse, setImageLikedTrue } from "../redux/isImageLikedSlice";
 
 const RandomPhotos = () => {
   const dispatch = useDispatch();
@@ -75,6 +88,7 @@ const RandomPhotos = () => {
         progress: undefined,
         theme: "dark",
       });
+      dispatch(setImageLikedTrue());
     } else {
       toast("Cannot perform action because you are not logged in!", {
         position: "bottom-right",
@@ -102,6 +116,7 @@ const RandomPhotos = () => {
         progress: undefined,
         theme: "dark",
       });
+      dispatch(setImageLikedFalse());
     } else {
       toast("Cannot perform action because you are not logged in!", {
         position: "bottom-right",
@@ -119,6 +134,8 @@ const RandomPhotos = () => {
   const handleMouseLeave = () => {
     setHoveredImage(null);
   };
+
+  useEffect(() => {}, [isImageLiked]);
 
   useEffect(() => {
     setRandomImages([]);

@@ -1,14 +1,24 @@
-import { loginUser } from "../API/Backend/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoggedInTrue } from "../redux/isUserLoggedInSlice";
 import { toast } from "react-toastify";
 import "../CSS/Login.css";
+
+// Backend API
+import { loginUser } from "../API/Backend/api";
+
+// Redux
+import { useDispatch } from "react-redux";
+
+// Redux state actions
+import { setLoggedInTrue } from "../redux/isUserLoggedInSlice";
+
+// Components
 import RequestSpeedAlert from "../components/RequestSpeedAlert";
 
+// Material UI components
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

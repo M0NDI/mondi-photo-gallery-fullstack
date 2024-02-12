@@ -1,24 +1,29 @@
 import "../CSS/Navbar.css";
-import { styled } from "@mui/material/styles";
 import { toast } from "react-toastify";
-import Button from "@mui/material/Button";
-import Categories from "./Categories";
-import MyAccountNavIcon from "./MyAccountNavIcon.jsx";
+import { NavLink } from "react-router-dom";
 
+// Assets/images
 import mondiLogo from "../assets/images/logos/mondi-logo-text-only.png";
-import { Link, NavLink } from "react-router-dom";
 
-// redux imports
+// Components
+import MyAccountNavIcon from "./MyAccountNavIcon.jsx";
+import Categories from "./Categories";
+
+// MaterialUI components
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+
+// Redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-// redux states
+// redux state actions
 import { imagesReset } from "../redux/imagesSlice.js";
 import { resetSearchTerm } from "../redux/userSearchTermSlice.js";
 import { pageReset } from "../redux/currentPageSlice.js";
-import { setLoggedInTrue, setLoggedInFalse } from "../redux/isUserLoggedInSlice.js";
+import { setLoggedInFalse } from "../redux/isUserLoggedInSlice.js";
 
-//api
+//Backend API
 import { logoutUser } from "../API/Backend/api.js";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {

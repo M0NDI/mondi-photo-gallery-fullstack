@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const logger = require("./middleware/eventLogger");
@@ -23,6 +24,7 @@ app.use(
 );
 app.use(express.json());
 app.use("/", logger);
+app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use(morgan("common"));
 app.use(cookieParser(process.env.JWT_SECRET)); // cookies now in req.signedCookies

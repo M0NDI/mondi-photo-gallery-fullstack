@@ -1,18 +1,18 @@
+// Material UI Component
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 import "../CSS/MyAccount.css";
 import { NavLink } from "react-router-dom";
-import { showCurrentUser } from "../API/Backend/api";
 import { useState, useEffect } from "react";
+
+// Backend API
+import { showCurrentUser } from "../API/Backend/api";
 
 const MyAccount = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);

@@ -1,21 +1,36 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import "../CSS/Images.css";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import LikeImageHoverOption from "./LikeImageHoverOption";
-import RemoveImageHoverOption from "./RemoveImageHoverOption";
 import { toast } from "react-toastify";
+
+// React
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import "../CSS/Images.css";
+
+// Material UI Components
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+
+// Components
+import LikeImageHoverOption from "./LikeImageHoverOption";
+import RemoveImageHoverOption from "./RemoveImageHoverOption";
+
+// Redux state actions
 import { imagesReset, addItems } from "../redux/imagesSlice";
-import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
-import { showCurrentUserLikedImages } from "../API/Backend/api";
 import { setImageLikedFalse, setImageLikedTrue } from "../redux/isImageLikedSlice";
 import { updateSearchTerm } from "../redux/userSearchTermSlice";
+
+// Remote API
 import { getImages } from "../API/Remote/api";
+
+// Backend API
+import { addImageToLiked, removeImageFromLiked } from "../API/Backend/api";
+import { showCurrentUserLikedImages } from "../API/Backend/api";
 
 const Images = () => {
   const dispatch = useDispatch();
@@ -55,6 +70,51 @@ const Images = () => {
     }
   };
 
+  const handleAddToLiked = async () => {
+    await addImageToLiked(hoveredImage);
+    if (isUserLoggedIn) {
+      toast("Image liked!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      dispatch(setImageLikedTrue());
+    } else {
+      toast("Cannot perform action because you are not logged in!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
+  const handleRemoveFromLiked = async () => {
+    await removeImageFromLiked(hoveredImage);
+    toast("Image unliked!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    dispatch(setImageLikedFalse());
+  };
+
+  useEffect(() => {}, [isImageLiked]);
+
   /* 
     The code inside the useEffect hook below is used to solve the following problem:
     When linking a certain page to someeone else or when copying the link and pasting in a new tab, 
@@ -82,47 +142,6 @@ const Images = () => {
 
   const handleMouseLeave = () => {
     setHoveredImage(null);
-  };
-
-  const handleAddToLiked = async () => {
-    await addImageToLiked(hoveredImage);
-    if (isUserLoggedIn) {
-      toast("Image liked!", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    } else {
-      toast("Cannot perform action because you are not logged in!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
-  };
-
-  const handleRemoveFromLiked = async () => {
-    await removeImageFromLiked(hoveredImage);
-    toast("Image unliked!", {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
   };
 
   // prevent images from search results from displaying

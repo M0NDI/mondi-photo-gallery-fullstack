@@ -1,8 +1,10 @@
 import "../CSS/Categories.css";
+
+// React
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-// import state reducers
+// Redux state actions
 import { updateSearchTerm } from "../redux/userSearchTermSlice";
 import { pageReset } from "../redux/currentPageSlice";
 import { imagesReset } from "../redux/imagesSlice";
