@@ -1,6 +1,7 @@
 import "./App.css";
 import "react-router-dom";
 import _ from "lodash";
+import { toast } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +36,7 @@ function App() {
   const currentPage = useSelector((state) => state.currentPage.value);
   const userSearchTerm = useSelector((state) => state.userSearchTerm.value);
   const loading = useSelector((state) => state.loading.value);
+  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
 
   // handle search submission
   const handleSubmit = async (userSearchTerm, currentPage, e) => {
@@ -73,6 +75,24 @@ function App() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (!isUserLoggedIn) {
+      toast.error(
+        "Please wait if server response is taking some time. Only the first response will be slower.",
+        {
+          position: "bottom-right",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {

@@ -12,9 +12,6 @@ import { useDispatch } from "react-redux";
 // Redux state actions
 import { setLoggedInTrue } from "../redux/isUserLoggedInSlice";
 
-// Components
-import RequestSpeedAlert from "../components/RequestSpeedAlert";
-
 // Material UI components
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -75,13 +72,6 @@ const Login = () => {
 
   return (
     <div className="login-main-container t-flex t-flex-col t-items-center t-justify-center t-h-full t-w-full t-bg-zinc-200 t-mt-10">
-      {formSubmissionInProgress ? (
-        <div className="t-flex t-justify-center t-items-center t-relative t-top-0">
-          <RequestSpeedAlert />
-        </div>
-      ) : (
-        <></>
-      )}
       <div className="login-sub-container t-h-1/2 t-w-1/2 t-flex t-flex-col t-justify-center">
         <div className="login-header t-flex t-justify-center t-text-6xl t-text-white t-mb-8">
           LOGIN

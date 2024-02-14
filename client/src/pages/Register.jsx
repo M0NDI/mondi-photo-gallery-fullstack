@@ -6,9 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 // toastify toast
 import { toast } from "react-toastify";
 
-// comopnents
-import RequestSpeedAlert from "../components/RequestSpeedAlert";
-
 // material ui components
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -72,13 +69,6 @@ const Register = () => {
 
   return (
     <div className="register-main-container t-flex t-flex-col t-items-center t-justify-center t-h-full t-w-full t-bg-zinc-200 t-mt-10">
-      {formSubmissionInProgress ? (
-        <div className="t-mb-8 t-z-10">
-          <RequestSpeedAlert />
-        </div>
-      ) : (
-        <></>
-      )}
       <div className="register-sub-container t-h-1/2 t-w-1/2 t-flex t-flex-col t-justify-center">
         <div className="register-header t-flex t-justify-center t-text-6xl t-text-white t-mb-8">
           REGISTER
