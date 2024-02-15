@@ -18,7 +18,6 @@ const registerUser = async (username, password, repeatedPassword, email) => {
       repeatedPassword,
       email,
     });
-    console.log(user);
     return user.data;
   } catch (error) {
     throw error.response.data;
@@ -37,7 +36,6 @@ const loginUser = async (username, password) => {
     );
     return user.data;
   } catch (error) {
-    console.log(error.response.data);
     throw error.response.data;
   }
 };

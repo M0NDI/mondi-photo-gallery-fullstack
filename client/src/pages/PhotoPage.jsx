@@ -125,7 +125,6 @@ const PhotoPage = () => {
 
   useEffect(() => {
     checkIfImageIsLiked(currentPageImage);
-    console.log(isImageLiked);
   }, [isImageLiked]);
 
   return (

@@ -24,7 +24,6 @@ const authorizeUserPermissions = (...roles) => {
       if (!roles.includes(req.user.role)) {
         return res.status(403).json({ ERR: "Unauthorized. User is not admin" });
       }
-      console.log("admin authorised");
       next();
     };
   } catch (error) {
