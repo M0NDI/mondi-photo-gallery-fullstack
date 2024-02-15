@@ -10,13 +10,15 @@ const authUrl = "https://mondi-photo-gallery-api.onrender.com/api/v1/auth";
 const usersUrl = "https://mondi-photo-gallery-api.onrender.com/api/v1/users";
 const imagesUrl = "https://mondi-photo-gallery-api.onrender.com/api/v1/images";
 
-const registerUser = async (username, password, email) => {
+const registerUser = async (username, password, repeatedPassword, email) => {
   try {
     const user = await axios.post(authUrl + "/register", {
-      username: username,
-      password: password,
-      email: email,
+      username,
+      password,
+      repeatedPassword,
+      email,
     });
+    console.log(user);
     return user.data;
   } catch (error) {
     throw error.response.data;
@@ -58,7 +60,7 @@ const showCurrentUser = async () => {
       return currentUser.data;
     }
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 
@@ -75,7 +77,7 @@ const addImageToLiked = async (likedPhoto) => {
       return addToLiked;
     }
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 
@@ -92,7 +94,7 @@ const removeImageFromLiked = async (imageToRemove) => {
       return removeImage;
     }
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 
@@ -107,7 +109,7 @@ const showCurrentUserLikedImages = async () => {
       return likedImages;
     }
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 

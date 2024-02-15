@@ -16,9 +16,9 @@ const Register = () => {
   const [registerForm, setRegisterForm] = useState({
     username: "",
     password: "",
+    repeatedPassword: "",
     email: "",
   });
-  const [formSubmissionInProgress, setFormSubmissionInProgress] = useState(false);
 
   const handleInputChange = (event) => {
     setRegisterForm({
@@ -27,6 +27,8 @@ const Register = () => {
     });
   };
 
+  const [formSubmissionInProgress, setFormSubmissionInProgress] = useState(false);
+
   const handleRegister = async (event) => {
     event.preventDefault();
     setFormSubmissionInProgress(true);
@@ -34,15 +36,16 @@ const Register = () => {
       const register = await registerUser(
         registerForm.username,
         registerForm.password,
+        registerForm.repeatedPassword,
         registerForm.email
       );
       if (register) {
-        navigate("/login");
+        // navigate("/login");
         toast("Successfully registered!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
-          closeOnClick: false,
+          closeOnClick: true,
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
@@ -51,18 +54,17 @@ const Register = () => {
       }
       setFormSubmissionInProgress(false);
     } catch (error) {
-      if (error) {
-        toast.error(error.ERR, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      }
+      toast.error(error.ERR || "An error occurred", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setFormSubmissionInProgress(false);
       setFormSubmissionInProgress(false);
     }
   };
@@ -94,6 +96,14 @@ const Register = () => {
           <div className="t-text-zinc-50 t-opacity-50">
             Password must be a minimum of 8 characters
           </div>
+          <input
+            className="register-input register-input-password t-h-10"
+            type="password"
+            name="repeatedPassword"
+            placeholder="Enter password again"
+            id="registration-repeated-password-field"
+            onChange={handleInputChange}
+          />
           <input
             className="register-input register-input-email t-h-10"
             type="email"
