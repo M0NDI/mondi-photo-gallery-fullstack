@@ -77,9 +77,9 @@ function App() {
   };
 
   useEffect(() => {
-    if (!isUserLoggedIn && location.pathname === "/") {
+    if (location.pathname === "/") {
       toast.error(
-        "Please wait if server response is taking some time. Only the first response will be slower.",
+        "Please wait if server response is taking some time. Only the first response may be slower.",
         {
           position: "bottom-right",
           autoClose: 10000,

@@ -43,10 +43,28 @@ const Images = () => {
 
   const [hoveredImage, setHoveredImage] = useState([]);
 
+  /* 
+    Create an array with 3 sub-arrays which represent 3 columns on the page.
+
+    Then for each image retrieved from the api, we get the index of the image and determine
+    which sub-array it will be placed into. 
+    
+    For example: 
+    image[0] % numOfColumns = 0 (placed in sub-array at index 0)
+    image[1] % numofColumns = 1 (placed in sub-array at index 1)
+    image[2] % numofColumns = 2 (placed in sub-array at index 2) -- next, we go back to index 0 as numOfColumns is 3
+    image[3] % numofColumns = 0 (placed in sub-array at index 0) -- and so on...
+
+    image[12] % numofColumns = 0 (placed in sub-array at index 0)
+    image[13] % numofColumns = 1 (placed in sub-array at index 1)
+    image[14] % numofColumns = 2 (placed in sub-array at index 2)
+
+    Performed this way to prevent large disparities between lengths of columns as one column
+    might receive more portrait oriented images than the others. Distribution of images is more
+    even.
+  */
   const numOfColumns = 3;
   const imagesArray = Array.from({ length: numOfColumns }, () => []); // create an array with numOfColumns sub arrays
-
-  // Distribute images across columns
   images.forEach((image, index) => {
     const indexOfSubArray = index % numOfColumns;
     imagesArray[indexOfSubArray].push(image);

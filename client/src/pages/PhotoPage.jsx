@@ -30,21 +30,28 @@ const PhotoPage = () => {
   // redux state
   const singleImage = useSelector((state) => state.singleImage.value);
   const isImageLiked = useSelector((state) => state.isImageLiked.value);
+  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
 
   // react state
   const [currentPageImage, setCurrentPageImage] = useState({});
 
+  /* check if image is liked and set isImageliked to true or false for
+  conditional rendering of like/unlike icons */
   const checkIfImageIsLiked = async (currentPageImage) => {
-    const fetchLikedImages = await showCurrentUserLikedImages(currentPageImage);
-    if (fetchLikedImages) {
-      const imageLiked = fetchLikedImages.data.likedImages.find(
-        (photo) => photo.id === currentPageImage.id
-      );
-      if (imageLiked) {
-        dispatch(setImageLikedTrue());
-      } else {
-        dispatch(setImageLikedFalse());
+    try {
+      const fetchLikedImages = await showCurrentUserLikedImages(currentPageImage);
+      if (fetchLikedImages) {
+        const imageLiked = fetchLikedImages.data.likedImages.find(
+          (photo) => photo.id === currentPageImage.id
+        );
+        if (imageLiked) {
+          dispatch(setImageLikedTrue());
+        } else {
+          dispatch(setImageLikedFalse());
+        }
       }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -68,27 +75,32 @@ const PhotoPage = () => {
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
+  // use saveAs from file-saver to download image on click
   const handleImageDownload = (imagePath, imageSlug) => {
     let url = imagePath;
     saveAs(url, imageSlug);
   };
 
+  // Like image. Display toast if not logged in when attempting to like
   const handleLikeImage = async (imageToLike) => {
-    const image = await addImageToLiked(imageToLike);
-    if (image) {
-      dispatch(setImageLikedTrue());
-      toast("Image liked!", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    } else {
-      toast("Unexpected error. Couldn't like image.", {
+    try {
+      const image = await addImageToLiked(imageToLike);
+      if (isUserLoggedIn && image) {
+        dispatch(setImageLikedTrue());
+        toast("Image liked!", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast("Cannot perform action because you are not logged in.", {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -101,28 +113,38 @@ const PhotoPage = () => {
     }
   };
 
+  // Unlike image and set isImageLikedToFalse for conditional rendering of like/unlike icons.
   const handleRemoveFromLiked = async () => {
-    const image = await removeImageFromLiked(currentPageImage);
-    if (image) {
-      toast("Image unliked!", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+    try {
+      const image = await removeImageFromLiked(currentPageImage);
+      if (isUserLoggedIn && image) {
+        toast("Image unliked!", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+      dispatch(setImageLikedFalse());
+    } catch (error) {
+      console.error(error);
     }
-    dispatch(setImageLikedFalse());
   };
 
+  /* get the image with current page url param id on page load then set image array to empty
+     to prevent unexpected results on other image pages.
+  */
   useEffect(() => {
     fetchSingleImage();
     dispatch(imageReset());
   }, [id]);
 
+  /* re-render page when state of isImageLiked changes for immediate feedback 
+  on like/unlike icons */
   useEffect(() => {
     checkIfImageIsLiked(currentPageImage);
   }, [isImageLiked]);

@@ -2,6 +2,10 @@
   background-color: #0c152a;
 }
 
+.register-form input {
+  width: 24rem;
+}
+
 .register-main-container {
   background-color: #0c152a !important;
 }
@@ -23,8 +27,4 @@
 
 .register-main-container form input::placeholder {
   color: #0c152a;
-}
-
-.register-form input {
-  width: 24rem;
 }

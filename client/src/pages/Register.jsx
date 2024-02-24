@@ -79,37 +79,37 @@ const Register = () => {
         <form onSubmit={handleRegister} className="register-form t-flex t-flex-col t-items-center">
           <input
             className="register-input register-input-username t-h-10"
+            id="registration-username-field"
             type="text"
             name="username"
-            placeholder="username"
-            id="registration-username-field"
+            placeholder="Username"
             onChange={handleInputChange}
           />
           <input
             className="register-input register-input-password t-h-10"
+            id="registration-password-field"
             type="password"
             name="password"
-            placeholder="password"
-            id="registration-password-field"
+            placeholder="Password"
+            onChange={handleInputChange}
+          />
+          <input
+            className="register-input register-input-password t-h-10"
+            id="registration-repeated-password-field"
+            type="password"
+            name="repeatedPassword"
+            placeholder="Confirm password"
             onChange={handleInputChange}
           />
           <div className="t-text-zinc-50 t-opacity-50">
             Password must be a minimum of 8 characters
           </div>
           <input
-            className="register-input register-input-password t-h-10"
-            type="password"
-            name="repeatedPassword"
-            placeholder="Enter password again"
-            id="registration-repeated-password-field"
-            onChange={handleInputChange}
-          />
-          <input
             className="register-input register-input-email t-h-10"
+            id="registration-email-field"
             type="email"
             name="email"
-            placeholder="email"
-            id="registration-email-field"
+            placeholder="Email"
             onChange={handleInputChange}
           />
           <input

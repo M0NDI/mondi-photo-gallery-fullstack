@@ -30,6 +30,7 @@ const MyAccount = () => {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageToRecover, setImageToRecover] = useState(null);
   const [recentlyUnliked, setRecentlyUnliked] = useState(false);
+
   const isImageLiked = useSelector((state) => state.isImageLiked.value);
 
   const handleMouseEnter = async (image) => {
@@ -38,34 +39,33 @@ const MyAccount = () => {
     dispatch(setImageLikedTrue());
   };
 
+  /* 
+    Unlike image and store it in temporary state "imageToRecover" so a user can undo the action.
+    "recentlyUnliked" state used to conditionally render undo button.
+  */
   const handleRemoveFromLiked = async (imageToRemove) => {
-    const remove = await removeImageFromLiked(imageToRemove);
-    setLikedImages((prevLikedImages) => prevLikedImages.filter((image) => image !== imageToRemove));
-    setRecentlyUnliked(true);
-    setImageToRecover(imageToRemove); // Store the image to recover upon removal
+    try {
+      const remove = await removeImageFromLiked(imageToRemove);
+      setLikedImages((prevLikedImages) =>
+        prevLikedImages.filter((image) => image !== imageToRemove)
+      );
+      setRecentlyUnliked(true);
+      setImageToRecover(imageToRemove); // Store the image to recover upon removal
 
-    if (remove.status === 200) {
-      toast("Image unliked!", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    } else {
-      toast("Cannot perform action because you are not logged in", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      if (remove.status === 200) {
+        toast("Image unliked!", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -82,6 +82,7 @@ const MyAccount = () => {
     }
   };
 
+  // recover image from "imageToRecover" state and add it back to liked images.
   const undoRemoveFromLiked = async () => {
     try {
       await addImageToLiked(imageToRecover);
@@ -102,9 +103,28 @@ const MyAccount = () => {
     }
   };
 
+  /* 
+    Create an array with 3 sub-arrays which represent 3 columns on the page.
+
+    Then for each image retrieved from the api, we get the index of the image and determine
+    which sub-array it will be placed into. 
+    
+    For example: 
+    image[0] % numOfColumns = 0 (placed in sub-array at index 0) -- 0 % 3 = 0
+    image[1] % numofColumns = 1 (placed in sub-array at index 1)
+    image[2] % numofColumns = 2 (placed in sub-array at index 2) -- next, we go back to index 0 as numOfColumns is 3
+    image[3] % numofColumns = 0 (placed in sub-array at index 0) -- and so on...
+
+    image[12] % numofColumns = 0 (placed in sub-array at index 0)
+    image[13] % numofColumns = 1 (placed in sub-array at index 1)
+    image[14] % numofColumns = 2 (placed in sub-array at index 2)
+
+    Performed this way to prevent large disparities between lengths of columns as one column
+    might receive more portrait oriented images than the others. Distribution of images is more
+    even.
+  */
   const numOfColumns = 3;
   const imagesArray = Array.from({ length: numOfColumns }, () => []);
-
   if (likedImages !== null) {
     likedImages.map((image, index) => {
       const indexOfSubArray = index % numOfColumns;

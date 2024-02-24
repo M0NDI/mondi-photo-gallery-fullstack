@@ -93,7 +93,7 @@ const Login = () => {
             type="password"
             name="password"
             autoComplete="on"
-            placeholder="password"
+            placeholder="Password"
             onChange={handleInputChange}
           />
           <input

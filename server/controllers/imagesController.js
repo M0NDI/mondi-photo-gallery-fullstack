@@ -29,7 +29,7 @@ const addImageToLiked = async (req, res) => {
       // Liked photo with the same id already exists
       return res
         .status(409)
-        .json({ ERR: "Image with the same id already exists in liked photos." });
+        .json({ ERR: "There was an error when liking this image." });
     }
   } catch (error) {
     console.log(error);
