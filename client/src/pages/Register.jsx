@@ -40,7 +40,7 @@ const Register = () => {
         registerForm.email
       );
       if (register) {
-        // navigate("/login");
+        navigate("/login");
         toast("Successfully registered!", {
           position: "top-right",
           autoClose: 3000,
