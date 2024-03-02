@@ -17,15 +17,20 @@ const Categories = ({ handleSubmit }) => {
   const currentPage = useSelector((state) => state.currentPage.value);
 
   const categoryClickSearch = async (newSearchTerm, e) => {
-    e.preventDefault();
-    // Reset the page to 1 and images state to empty when a new search or category is selected
-    dispatch(pageReset());
-    dispatch(imagesReset());
+    try {
+      e.preventDefault();
+      // Reset the page to 1 and images state to empty when a new search or category is selected
+      dispatch(pageReset());
+      dispatch(imagesReset());
 
-    dispatch(updateSearchTerm(newSearchTerm));
-    const fetchCategory = await handleSubmit(newSearchTerm, currentPage, e);
-    if (fetchCategory) {
-      navigate(`/c/${newSearchTerm}`);
+      dispatch(updateSearchTerm(newSearchTerm));
+      const fetchCategory = await handleSubmit(newSearchTerm, currentPage, e);
+      if (fetchCategory) {
+        navigate(`/c/${newSearchTerm}`);
+      }
+    } catch (error) {
+      console.error(error);
+      return error;
     }
   };
 

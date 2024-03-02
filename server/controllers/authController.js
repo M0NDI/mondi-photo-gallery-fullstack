@@ -18,31 +18,31 @@ const Register = async (req, res) => {
 
     // validate user input
     if (!username || !password || !repeatedPassword || !email) {
-      return res.status(400).json({ ERR: "Inputs cannot be empty", statusCode: 400 });
+      return res.status(400).json({ ERR: "Inputs cannot be empty" });
     }
 
     if (password.length < 8) {
       return res
         .status(400)
-        .json({ ERR: "Password must be at least 8 characters", statusCode: 400 });
+        .json({ ERR: "Password must be at least 8 characters"});
     }
 
     if (!validator.isAlphanumeric(username)) {
-      return res.status(400).json({ ERR: "Name cannot contain only numbers" });
+      return res.status(400).json({ ERR: "Name cannot contain only numbers"});
     }
 
     // Check if the username contains at least one letter
     if (!username.match(/[a-zA-Z]/)) {
-      return res.status(400).json({ ERR: "Name must contain at least one letter" });
+      return res.status(400).json({ ERR: "Name must contain at least one letter"});
     }
 
     if (!validator.isEmail(email)) {
       // If email is not in a valid format, return a 400 Bad Request response
-      return res.status(400).json({ ERR: "Email format is not valid" });
+      return res.status(400).json({ ERR: "Email format is not valid"});
     }
 
     if (repeatedPassword !== password) {
-      return res.status(400).json({ ERR: "Passwords do not match" });
+      return res.status(400).json({ ERR: "Passwords do not match"});
     }
 
     // Hash the user's password with the generated salt
@@ -52,7 +52,7 @@ const Register = async (req, res) => {
     const user = await UserSchema.findOne({ username: username });
 
     if (user) {
-      return res.status(409).json({ ERR: "Username is already taken", status: 409 });
+      return res.status(409).json({ ERR: "Username is already taken"});
     }
 
     let userCount = await UserSchema.countDocuments({});
@@ -90,7 +90,7 @@ const Login = async (req, res) => {
     const { username, password } = req.body;
     // validate user input
     if (!username || !password) {
-      return res.status(400).json({ ERR: "Inputs cannot be empty", statusCode: 400 });
+      return res.status(400).json({ ERR: "Inputs cannot be empty"});
     }
 
     const user = await UserSchema.findOne({ username });

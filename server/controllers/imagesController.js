@@ -59,7 +59,7 @@ const removeLikedImage = async (req, res) => {
       // Save the updated user document in the database
       await user.save();
 
-      return res.status(200).json({ SUCCESS: true, message: "Liked image removed successfully." });
+      return res.status(200).json({ success: true, message: "Liked image removed successfully." });
     } else {
       return res.status(400).json({ ERR: "Image not found in the likedPhotos array." });
     }

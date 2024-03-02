@@ -20,7 +20,7 @@ const getImages = async (searchTerm, page) => {
       return response.data.results;
     }
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 
@@ -28,15 +28,15 @@ const getSingleImage = async (imageId) => {
   try {
     const response = await axios.get(rootUrl + `/photos/${imageId}`, {
       params: {
-        id: imageId
+        id: imageId,
       },
       headers: {
-        Authorization: `Client-ID ${accessKey}`
-      }
+        Authorization: `Client-ID ${accessKey}`,
+      },
     });
-    return response.data
+    return response.data;
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 
@@ -54,7 +54,7 @@ const getRandomPhotos = async () => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw error.response.data;
   }
 };
 

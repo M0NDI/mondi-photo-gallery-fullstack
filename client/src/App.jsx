@@ -77,24 +77,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      toast.error(
-        "Please wait if server response is taking some time. Only the first response may be slower.",
-        {
-          position: "bottom-right",
-          autoClose: 10000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
-    }
-  }, []);
-
-  useEffect(() => {
     const fetchCurrentUser = async () => {
       const currentUser = await showCurrentUser();
       if (!currentUser) {

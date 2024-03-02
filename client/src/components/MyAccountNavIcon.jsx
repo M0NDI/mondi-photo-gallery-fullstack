@@ -94,26 +94,12 @@ const MyAccount = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <NavLink to="/register" className="t-w-full t-h-full"></NavLink>
-        {/* <NavLink to="/my-profile" className="t-w-full t-h-full">
-          <MenuItem onClick={handleClose} className="menu-item">
-            <Avatar /> Profile
-          </MenuItem>
-        </NavLink> */}
         <NavLink to="/my-liked-photos" className="t-w-full t-h-full">
           <MenuItem onClick={handleClose} className="menu-item">
             <Avatar /> My Liked Photos
           </MenuItem>
         </NavLink>
         <Divider />
-
-        {/* <NavLink to="/account-settings" onClick={handleClose} className="menu-item">
-          <MenuItem>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-        </NavLink> */}
       </Menu>
     </React.Fragment>
   );

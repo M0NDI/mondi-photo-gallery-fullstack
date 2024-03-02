@@ -74,6 +74,7 @@ const RandomPhotos = () => {
       }
     } catch (error) {
       console.log(error);
+      return error;
     }
   };
 
@@ -94,20 +95,23 @@ const RandomPhotos = () => {
   };
 
   const handleAddToLiked = async () => {
-    const addToLiked = await addImageToLiked(hoveredImage);
-    if (addToLiked && isUserLoggedIn === true) {
-      toast("Image liked!", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      dispatch(setImageLikedTrue());
-    } else {
+    try {
+      const addToLiked = await addImageToLiked(hoveredImage);
+      if (addToLiked && isUserLoggedIn === true) {
+        toast("Image liked!", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        dispatch(setImageLikedTrue());
+      }
+    } catch (error) {
+      console.error(error);
       toast("Cannot perform action because you are not logged in!", {
         position: "bottom-right",
         autoClose: 5000,
@@ -118,24 +122,28 @@ const RandomPhotos = () => {
         progress: undefined,
         theme: "dark",
       });
+      return error;
     }
   };
 
   const handleRemoveFromLiked = async () => {
-    const removeFromLiked = await removeImageFromLiked(hoveredImage);
-    if (removeFromLiked && isUserLoggedIn === true) {
-      toast("Image unliked!", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      dispatch(setImageLikedFalse());
-    } else {
+    try {
+      const removeFromLiked = await removeImageFromLiked(hoveredImage);
+      if (removeFromLiked && isUserLoggedIn === true) {
+        toast("Image unliked!", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        dispatch(setImageLikedFalse());
+      }
+    } catch (error) {
+      console.error(error);
       toast("Cannot perform action because you are not logged in!", {
         position: "bottom-right",
         autoClose: 2000,
@@ -146,6 +154,7 @@ const RandomPhotos = () => {
         progress: undefined,
         theme: "dark",
       });
+      return error;
     }
   };
 

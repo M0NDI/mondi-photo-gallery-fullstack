@@ -7,7 +7,7 @@ import mondiLogo from "../assets/images/logos/mondi-logo-text-only.png";
 
 // Components
 import MyAccountNavIcon from "./MyAccountNavIcon.jsx";
-import Categories from "./Categories";
+import Categories from "./Categories.jsx";
 
 // MaterialUI components
 import { styled } from "@mui/material/styles";
@@ -42,20 +42,25 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
   };
 
   const logout = async () => {
-    const logout = await logoutUser();
-    if (logout) {
-      dispatch(setLoggedInFalse());
-      toast("Successfully logged out! 😊", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      navigate("/");
+    try {
+      const logout = await logoutUser();
+      if (logout) {
+        dispatch(setLoggedInFalse());
+        toast("Successfully logged out! 😊", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+      return error;
     }
   };
 
@@ -92,9 +97,6 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
     "&:active": {
       transform: 0.8,
     },
-    // '&:focus': {
-    //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    // },
   });
 
   const LogoutButton = styled(Button)({
@@ -130,9 +132,6 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
     "&:active": {
       transform: 0.8,
     },
-    // '&:focus': {
-    //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    // },
   });
 
   const RegisterButton = styled(Button)({
@@ -168,9 +167,6 @@ const Navbar = ({ handleSubmit, handleInputChange }) => {
     "&:active": {
       transform: 0.8,
     },
-    // '&:focus': {
-    //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    // },
   });
 
   return (

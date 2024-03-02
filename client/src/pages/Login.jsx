@@ -54,19 +54,19 @@ const Login = () => {
       }
       setFormSubmissionInProgress(false);
     } catch (error) {
-      if (error) {
-        toast.error(error.ERR, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      }
+      console.error(error);
+      toast.error(error.ERR, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setFormSubmissionInProgress(false);
+      return error;
     }
   };
 
