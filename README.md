@@ -1,3 +1,5 @@
+* Currently in the process of converting this application to Typescript*
+
 Hi, this is a photo/image search app I created using JS, React, HTML, CSS, NodeJS, Express and MongoDB.
 
 Below I will give a brief description of how the app works and its features.
