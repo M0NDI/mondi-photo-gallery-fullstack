@@ -1,4 +1,4 @@
-* Currently in the process of converting this application to Typescript*
+// Currently in the process of converting this application to Typescript //
 
 Hi, this is a photo/image search app I created using JS, React, HTML, CSS, NodeJS, Express and MongoDB.
 
