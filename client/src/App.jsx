@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getImages } from "./API/Remote/api.js";
 
 // Backend API
-import { logoutUser, showCurrentUser } from "./API/Backend/api.js";
+import { logoutUser, showCurrentUser } from "./API/Backend/api.ts";
 
 // Components and pages
 import Images from "./components/Images.jsx";
