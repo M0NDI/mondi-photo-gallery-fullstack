@@ -11,13 +11,13 @@ const Register = async (req, res) => {
   const saltRounds = 10;
 
   try {
-    let { username, password, repeatedPassword, email, role } = req.body;
+    let { username, password, confirmPassword, email, role } = req.body;
 
     // Generate a salt
     const salt = await bcrypt.genSalt(saltRounds);
 
     // validate user input
-    if (!username || !password || !repeatedPassword || !email) {
+    if (!username || !password || !confirmPassword || !email) {
       return res.status(400).json({ ERR: "Inputs cannot be empty" });
     }
 
@@ -41,7 +41,7 @@ const Register = async (req, res) => {
       return res.status(400).json({ ERR: "Email format is not valid"});
     }
 
-    if (repeatedPassword !== password) {
+    if (confirmPassword !== password) {
       return res.status(400).json({ ERR: "Passwords do not match"});
     }
 

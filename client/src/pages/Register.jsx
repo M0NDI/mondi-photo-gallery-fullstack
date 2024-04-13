@@ -16,7 +16,7 @@ const Register = () => {
   const [registerForm, setRegisterForm] = useState({
     username: "",
     password: "",
-    repeatedPassword: "",
+    confirmPassword: "",
     email: "",
   });
 
@@ -36,7 +36,7 @@ const Register = () => {
       const register = await registerUser(
         registerForm.username,
         registerForm.password,
-        registerForm.repeatedPassword,
+        registerForm.confirmPassword,
         registerForm.email
       );
       if (register) {
@@ -64,7 +64,6 @@ const Register = () => {
         progress: undefined,
         theme: "dark",
       });
-      setFormSubmissionInProgress(false);
       setFormSubmissionInProgress(false);
     }
   };
@@ -95,9 +94,9 @@ const Register = () => {
           />
           <input
             className="register-input register-input-password t-h-10"
-            id="registration-repeated-password-field"
+            id="registration-confirm-password-field"
             type="password"
-            name="repeatedPassword"
+            name="confirmPassword"
             placeholder="Confirm password"
             onChange={handleInputChange}
           />

@@ -18,7 +18,6 @@ export const loadingSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setLoadingTrue, resetLoading, toggleLoading } = loadingSlice.actions;
 
 export default loadingSlice.reducer;

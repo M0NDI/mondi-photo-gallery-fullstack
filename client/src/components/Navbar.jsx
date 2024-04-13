@@ -24,7 +24,7 @@ import { pageReset } from "../redux/currentPageSlice.js";
 import { setLoggedInFalse } from "../redux/isUserLoggedInSlice.js";
 
 //Backend API
-import { logoutUser } from "../API/Backend/api.ts";
+import { logoutUser } from "../API/Backend/api.js";
 
 const Navbar = ({ handleSubmit, handleInputChange }) => {
   const dispatch = useDispatch();

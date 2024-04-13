@@ -19,7 +19,6 @@ export const currentPageSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { pageReset, increment, decrement } = currentPageSlice.actions;
 
 export default currentPageSlice.reducer;

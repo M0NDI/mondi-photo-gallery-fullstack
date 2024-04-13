@@ -15,7 +15,6 @@ export const singleImageSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { imageReset, addItem } = singleImageSlice.actions;
 
 export default singleImageSlice.reducer;

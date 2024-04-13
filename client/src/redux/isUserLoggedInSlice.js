@@ -15,7 +15,6 @@ export const isUserLoggedInSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setLoggedInTrue, setLoggedInFalse } = isUserLoggedInSlice.actions;
 
 export default isUserLoggedInSlice.reducer;

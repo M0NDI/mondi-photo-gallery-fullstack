@@ -15,7 +15,6 @@ export const isImageLikedSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setImageLikedTrue, setImageLikedFalse } = isImageLikedSlice.actions;
 
 export default isImageLikedSlice.reducer;

@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getImages } from "./API/Remote/api.js";
 
 // Backend API
-import { logoutUser, showCurrentUser } from "./API/Backend/api.ts";
+import { logoutUser, showCurrentUser } from "./API/Backend/api.js";
 
 // Components and pages
 import Images from "./components/Images.jsx";
@@ -36,7 +36,6 @@ function App() {
   const currentPage = useSelector((state) => state.currentPage.value);
   const userSearchTerm = useSelector((state) => state.userSearchTerm.value);
   const loading = useSelector((state) => state.loading.value);
-  const isUserLoggedIn = useSelector((state) => state.isUserLoggedIn.value);
 
   // handle search submission
   const handleSubmit = async (userSearchTerm, currentPage, e) => {
@@ -140,17 +139,19 @@ function App() {
   }, [location.pathname, currentPage, loading]);
 
   return (
-    <div className="app t-h-screen">
-      <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
-      <Routes>
-        <Route path="/" element={<HomeRandomPhotos />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/my-liked-photos" element={<MyLikedPhotos />} />
-        <Route path="/photo/:id" element={<PhotoPage />} />
-        <Route path="/c/:searchTerm" element={<Images />} />
-      </Routes>
-    </div>
+    <main>
+      <div className="app t-h-screen">
+        <Navbar handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
+        <Routes>
+          <Route path="/" element={<HomeRandomPhotos />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/my-liked-photos" element={<MyLikedPhotos />} />
+          <Route path="/photo/:id" element={<PhotoPage />} />
+          <Route path="/c/:searchTerm" element={<Images />} />
+        </Routes>
+      </div>
+    </main>
   );
 }
 
